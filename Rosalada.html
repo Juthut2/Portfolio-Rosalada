@@ -220,10 +220,11 @@
   }
 
   .hero-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
     object-fit: cover;
+    object-position: center top;
     margin: 0 auto 1.5rem;
     border: 4px solid var(--bg);
     box-shadow: 0 0 0 3px var(--accent-dim), var(--shadow-lg);
@@ -670,18 +671,8 @@
     line-height: 1.6;
   }
 
-  /* Featured badge */
-  .project-featured {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    background: linear-gradient(135deg, var(--accent), var(--teal));
-    color: #fff;
-    padding: 0.2rem 0.55rem;
-    border-radius: 4px;
-    letter-spacing: 0.05em;
-  }
+
+
 
   /* ── RESUME ── */
   .resume-container {
@@ -969,13 +960,19 @@
   footer span { color: var(--accent); }
 
   /* ── SCROLL ANIMATIONS ── */
-  .fade-in {
+  .fade-in,
+  .section-label, .section-title, .section-sub,
+  .resume-header-block, .resume-section-head, .skills-bar-group, .download-bar,
+  .contact-layout > div, .exp-layout > div {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
-  .fade-in.visible {
+  .fade-in.visible,
+  .section-label.visible, .section-title.visible, .section-sub.visible,
+  .resume-header-block.visible, .resume-section-head.visible, .skills-bar-group.visible, .download-bar.visible,
+  .contact-layout > div.visible, .exp-layout > div.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1095,6 +1092,98 @@
 
   .seminar-text h4 { font-size: 0.9rem; font-weight: 600; }
   .seminar-text p { font-size: 0.8rem; color: var(--text3); margin-top: 0.15rem; }
+
+  /* ── PRINT (PDF) STYLES ── */
+  @media print {
+    body, html {
+      background: #fff !important;
+      color: #000 !important;
+      min-height: auto !important;
+      height: auto !important;
+    }
+    nav, .theme-toggle {
+      display: none !important;
+    }
+    .page {
+      display: none !important;
+      padding: 0 !important;
+      min-height: auto !important;
+    }
+    #page-resume {
+      display: block !important;
+    }
+    .resume-container {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+    }
+    .resume-header-block {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 0 1rem 0 !important;
+      border-radius: 0 !important;
+    }
+    .resume-header-block::after {
+      display: none !important;
+    }
+    .resume-name {
+      color: #000 !important;
+      margin-bottom: 0.2rem;
+    }
+    .resume-contact {
+      color: #333 !important;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .resume-contact a {
+      color: #333 !important;
+      text-decoration: none !important;
+    }
+    .resume-section-head {
+      margin: 1.25rem 0 0.5rem !important;
+      page-break-after: avoid;
+    }
+    .resume-section-head h3 {
+      color: #000 !important;
+    }
+    .resume-divider {
+      background: #ccc !important;
+    }
+    .resume-entry {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      margin-bottom: 1rem !important;
+      page-break-inside: avoid;
+    }
+    .resume-entry-title {
+      color: #000 !important;
+      font-size: 1rem;
+    }
+    .resume-entry-sub {
+      color: #333 !important;
+    }
+    .resume-entry-date {
+      color: #555 !important;
+    }
+    .resume-entry-desc, .resume-entry ul {
+      color: #222 !important;
+      margin-top: 0.25rem !important;
+    }
+    .skills-bar-group {
+      gap: 0.5rem !important;
+      page-break-inside: avoid;
+    }
+    .skill-pill {
+      border: 1px solid #ccc !important;
+      background: transparent !important;
+      color: #000 !important;
+      padding: 0.2rem 0.5rem !important;
+    }
+    .skill-pill-dot {
+      background: #555 !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1496,7 +1585,7 @@
           <div class="project-header">
             <h3 class="project-title">Modeng Zoo Management System</h3>
             <div class="project-links">
-              <a class="project-link" href="#" title="Source Code" style="opacity:0.5;pointer-events:none">⌥</a>
+              <a class="project-link" href="https://github.com/Juthut2/ZooMS" target="_blank" title="Source Code">⌥</a>
             </div>
           </div>
           <p class="project-desc">A database-driven zoo management system covering animals, enclosures, staff, care programs, events, ticketing, and visitor management. Designed with ERD-based relational modeling.</p>
@@ -1779,7 +1868,27 @@
 
   // ── SCROLL ANIMATIONS ──
   function initObserver() {
-    const targets = document.querySelectorAll('.page.active .skill-card, .page.active .cert-card, .page.active .org-card, .page.active .timeline-item, .page.active .seminar-item, .page.active .project-card, .page.active .fade-in');
+    const targets = document.querySelectorAll(`
+      .page.active .skill-card, 
+      .page.active .cert-card, 
+      .page.active .org-card, 
+      .page.active .timeline-item, 
+      .page.active .seminar-item, 
+      .page.active .project-card, 
+      .page.active .fade-in,
+      .page.active .section-label,
+      .page.active .section-title,
+      .page.active .section-sub,
+      .page.active .resume-header-block,
+      .page.active .resume-section-head,
+      .page.active .resume-entry,
+      .page.active .skills-bar-group,
+      .page.active .download-bar,
+      .page.active .contact-layout > div,
+      .page.active .contact-item,
+      .page.active .contact-form,
+      .page.active .exp-layout > div
+    `);
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
