@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Justin Troy Rosalada – Portfolio</title>
+<link rel="icon" type="image/jpeg" href="Profile.jpg">
+<link rel="apple-touch-icon" href="Profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -70,6 +72,20 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  /* ── GLOBAL POLISH ── */
+  ::selection { background: var(--accent); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
   /* ── NAV ── */
   nav {
@@ -146,7 +162,15 @@
     padding-top: 60px;
   }
 
-  .page.active { display: block; }
+  .page.active {
+    display: block;
+    animation: pageFadeIn 0.45s ease;
+  }
+
+  @keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   /* ── ABOUT ── */
   .hero {
@@ -303,6 +327,35 @@
     animation: fadeUp 0.6s ease forwards 0.5s;
   }
 
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.45rem 1rem 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: var(--text2);
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.58s;
+  }
+
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22C55E;
+    flex-shrink: 0;
+    animation: statusPulse 2s infinite;
+  }
+
+  @keyframes statusPulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.55); }
+    70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+
   .hero-desc {
     font-size: 1rem;
     color: var(--text3);
@@ -420,6 +473,7 @@
   .skill-card {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
@@ -439,9 +493,20 @@
     box-shadow: var(--shadow);
   }
 
+  .skill-card:hover .skill-card-icon { transform: scale(1.08); }
+
   .skill-card-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 0.9rem;
+    box-shadow: 0 6px 16px -4px rgba(99,102,241,0.4);
+    transition: transform 0.2s;
   }
 
   .skill-card-title {
@@ -466,7 +531,23 @@
     padding: 0.2rem 0.55rem;
     border-radius: 4px;
     font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
   }
+
+  .tag-icon {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 1px;
+  }
+
+  .tag-icon img { width: 100%; height: 100%; object-fit: contain; }
 
   .tag-teal {
     background: var(--teal-dim);
@@ -617,6 +698,13 @@
     .exp-layout { grid-template-columns: 1fr; }
     nav { padding: 0 1rem; }
     .nav-links a { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+    .section { padding: 3.5rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem; }
+    .resume-container { padding: 2rem 1.25rem; }
+    .resume-header-block { padding: 1.75rem 1.25rem; }
+    .contact-form { padding: 1.5rem; }
+    .project-body { padding: 1.1rem 1.25rem 1.25rem; }
+    .cert-card, .org-card { padding: 1.1rem 1.25rem; }
   }
 
   .timeline {
@@ -1315,6 +1403,34 @@
   .org-info p { font-size: 0.78rem; color: var(--text3); }
   .org-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); margin-top: 0.25rem; }
 
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border2);
+    box-shadow: var(--shadow);
+  }
+
+  .stat-card .stat-num { font-size: 2rem; font-weight: 700; }
+  .stat-card .stat-label { font-size: 0.78rem; color: var(--text3); margin-top: 0.1rem; }
+
+  .focus-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .focus-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+
   /* Seminars */
   .seminars-list {
     display: flex;
@@ -1491,6 +1607,7 @@
       <p class="hero-eyebrow">// Based in Davao City, Philippines</p>
       <h1 class="hero-name">Justin Troy<br><span class="accent">Rosa</span><span class="teal">lada</span></h1>
       <p class="hero-title">CS Student · Cybersecurity · AI/ML · Full-Stack</p>
+      <div class="status-badge"><span class="status-dot"></span>Open to OJT opportunities</div>
       <p class="hero-desc" id="typewriter-text" data-text="Hello! I'm a third-year Computer Science student at the University of Mindanao. I'm passionate about building intelligent systems, detecting misinformation, and crafting full-stack applications that actually work. I love exploring new technologies and solving complex problems with code."></p>
       <div class="hero-ctas">
         <button class="btn btn-primary" onclick="showPage('experience')">View My Work</button>
@@ -1516,20 +1633,20 @@
         <div class="skill-card-title">Cybersecurity</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Threat analysis, network security fundamentals, and security-first software design.</p>
         <div class="skill-card-tags">
-          <span class="tag">Threat Analysis</span>
-          <span class="tag">Network Security</span>
-          <span class="tag tag-teal">Certiport Certified</span>
+          <span class="tag"><span class="skill-pill-dot"></span>Threat Analysis</span>
+          <span class="tag"><span class="skill-pill-dot"></span>Network Security</span>
+          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent">🎖️</span>Certiport Certified</span>
         </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🤖</div>
+      <div class="skill-card" style="border-top-color:var(--teal)">
+        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🤖</div>
         <div class="skill-card-title">AI &amp; Machine Learning</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Building NLP pipelines, transformer models, and multimodal fake news detection systems.</p>
         <div class="skill-card-tags">
-          <span class="tag">DistilBERT</span>
-          <span class="tag">BERTweet</span>
-          <span class="tag">OCR</span>
-          <span class="tag">Streamlit</span>
+          <span class="tag"><span class="skill-pill-dot" style="background:var(--teal)"></span>DistilBERT</span>
+          <span class="tag"><span class="skill-pill-dot" style="background:var(--teal)"></span>BERTweet</span>
+          <span class="tag"><span class="skill-pill-dot" style="background:var(--teal)"></span>OCR</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/streamlit" alt="" loading="lazy" onerror="iconFallback(this)"></span>Streamlit</span>
         </div>
       </div>
       <div class="skill-card">
@@ -1537,22 +1654,22 @@
         <div class="skill-card-title">Web Development</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Full-stack development with Laravel, Django, and modern front-end technologies.</p>
         <div class="skill-card-tags">
-          <span class="tag">Laravel</span>
-          <span class="tag">Django</span>
-          <span class="tag">PHP</span>
-          <span class="tag">Bootstrap</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/laravel" alt="" loading="lazy" onerror="iconFallback(this)"></span>Laravel</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/django" alt="" loading="lazy" onerror="iconFallback(this)"></span>Django</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></span>PHP</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/bootstrap" alt="" loading="lazy" onerror="iconFallback(this)"></span>Bootstrap</span>
         </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">💻</div>
+      <div class="skill-card" style="border-top-color:var(--teal)">
+        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">💻</div>
         <div class="skill-card-title">Languages</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Comfortable across multiple languages for backend, scripting, and data work.</p>
         <div class="skill-card-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Java</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">SQL</span>
-          <span class="tag">PHP</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy" onerror="iconFallback(this)"></span>Python</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/openjdk" alt="" loading="lazy" onerror="iconFallback(this)"></span>Java</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/javascript" alt="" loading="lazy" onerror="iconFallback(this)"></span>JavaScript</span>
+          <span class="tag"><span class="skill-pill-dot"></span>SQL</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></span>PHP</span>
         </div>
       </div>
       <div class="skill-card">
@@ -1560,20 +1677,21 @@
         <div class="skill-card-title">Tools &amp; DevOps</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Version control, AI-assisted development, and prompt engineering workflows.</p>
         <div class="skill-card-tags">
-          <span class="tag">Git/GitHub</span>
-          <span class="tag">VS Code</span>
-          <span class="tag">AI Tools</span>
-          <span class="tag">Prompt Eng.</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/git" alt="" loading="lazy" onerror="iconFallback(this)"></span>Git</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/github" alt="" loading="lazy" onerror="iconFallback(this)"></span>GitHub</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/visualstudiocode" alt="" loading="lazy" onerror="iconFallback(this)"></span>VS Code</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/openai" alt="" loading="lazy" onerror="iconFallback(this)"></span>AI Tools</span>
+          <span class="tag"><span class="skill-pill-dot"></span>Prompt Eng.</span>
         </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🗄️</div>
+      <div class="skill-card" style="border-top-color:var(--teal)">
+        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🗄️</div>
         <div class="skill-card-title">Databases</div>
         <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Relational database design, ERD modeling, and SQL query optimization.</p>
         <div class="skill-card-tags">
-          <span class="tag">MySQL</span>
-          <span class="tag">SQL</span>
-          <span class="tag tag-teal">Certiport Certified</span>
+          <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy" onerror="iconFallback(this)"></span>MySQL</span>
+          <span class="tag"><span class="skill-pill-dot"></span>SQL</span>
+          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent">🎖️</span>Certiport Certified</span>
         </div>
       </div>
     </div>
@@ -1590,7 +1708,7 @@
 
       <a class="cert-card" href="Cybersecurity_Certificate.pdf" target="_blank" rel="noopener">
         <div class="cert-thumb">
-          <img src="Cybersecurity_Certificate.png" alt="Cybersecurity certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Cybersecurity_Certificate.jpg" alt="Cybersecurity certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
@@ -1606,7 +1724,7 @@
 
       <a class="cert-card" href="Network_Security_Certificate.pdf" target="_blank" rel="noopener">
         <div class="cert-thumb">
-          <img src="Network_Security_Certificate.png" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Network_Security_Certificate.jpg" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
@@ -1622,7 +1740,7 @@
 
       <a class="cert-card" href="Database_Certificate.pdf" target="_blank" rel="noopener">
         <div class="cert-thumb">
-          <img src="Database_Certificate.png" alt="Database Fundamentals certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Database_Certificate.jpg" alt="Database Fundamentals certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
@@ -1754,25 +1872,25 @@
       <div>
         <h3 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1.5rem;font-family:'Space Mono',monospace">Quick Stats</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem">
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center">
-            <p style="font-size:2rem;font-weight:700;color:var(--accent)">3+</p>
-            <p style="font-size:0.78rem;color:var(--text3)">Certiport Certs</p>
+          <div class="stat-card">
+            <p class="stat-num" style="color:var(--accent)">3+</p>
+            <p class="stat-label">Certiport Certs</p>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center">
-            <p style="font-size:2rem;font-weight:700;color:var(--teal)">6+</p>
-            <p style="font-size:0.78rem;color:var(--text3)">Projects Built</p>
+          <div class="stat-card">
+            <p class="stat-num" style="color:var(--teal)">6+</p>
+            <p class="stat-label">Projects Built</p>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center">
-            <p style="font-size:2rem;font-weight:700;color:var(--accent)">3</p>
-            <p style="font-size:0.78rem;color:var(--text3)">Tech Communities</p>
+          <div class="stat-card">
+            <p class="stat-num" style="color:var(--accent)">3</p>
+            <p class="stat-label">Tech Communities</p>
           </div>
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center">
-            <p style="font-size:2rem;font-weight:700;color:var(--teal)">3rd</p>
-            <p style="font-size:0.78rem;color:var(--text3)">Year CS Student</p>
+          <div class="stat-card">
+            <p class="stat-num" style="color:var(--teal)">3rd</p>
+            <p class="stat-label">Year CS Student</p>
           </div>
         </div>
 
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem">
+        <div class="focus-card">
           <p style="font-size:0.78rem;color:var(--text3);margin-bottom:0.75rem;font-family:'Space Mono',monospace;letter-spacing:0.08em">CURRENT FOCUS</p>
           <p style="font-size:0.88rem;color:var(--text2);line-height:1.7">Actively seeking an OJT/internship position. Working on AI-driven misinformation detection thesis, exploring BERTweet as base model for improved emotional manipulation detection in disaster-related social media posts.</p>
           <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem">
@@ -1872,7 +1990,7 @@
             </div>
           </div>
           <div class="project-body">
-            <h3 class="project-title">El Pedidos Mexicanos</h3>
+            <h3 class="project-title">Foodtruck Ordering System</h3>
             <p class="project-desc">An online food ordering system for a food truck business, featuring a menu display, cart management, and order processing flow.</p>
             <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
             <div class="project-tags">
