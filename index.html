@@ -219,18 +219,55 @@
     max-width: 720px;
   }
 
-  .hero-avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 16px;
-    object-fit: cover;
-    object-position: center top;
+  .hero-avatar-wrap {
+    position: relative;
+    width: 176px;
+    height: 176px;
     margin: 0 auto 1.5rem;
-    border: 4px solid var(--bg);
-    box-shadow: 0 0 0 3px var(--accent-dim), var(--shadow-lg);
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-avatar-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    opacity: 0.55;
+    filter: blur(14px);
+    z-index: 0;
+  }
+
+  .hero-avatar {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 4px solid var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-dim), var(--shadow-lg);
     display: block;
+  }
+
+  .hero-avatar-fallback {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border: 4px solid var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-dim), var(--shadow-lg);
   }
 
   .hero-eyebrow {
@@ -439,18 +476,21 @@
   /* Certs */
   .certs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 1rem;
   }
 
   .cert-card {
+    position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 1.25rem 1.5rem;
     display: flex;
     gap: 1rem;
     align-items: flex-start;
+    text-decoration: none;
+    color: var(--text);
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     opacity: 0;
     transform: translateY(16px);
@@ -468,22 +508,102 @@
     box-shadow: 0 0 0 1px var(--accent-dim), var(--shadow);
   }
 
-  .cert-badge {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: var(--accent-dim);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
+  /* little "document" thumbnail showing the real cert image */
+  .cert-thumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    background: #FAFAFE;
+    border-radius: 7px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(15,16,41,0.08);
+    overflow: hidden;
+  }
+
+  .cert-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cert-thumb-fallback {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 8px;
+  }
+
+  .cert-thumb-fallback .ln {
+    display: block;
+    height: 3px;
+    border-radius: 2px;
+    background: #DADCF0;
+  }
+  .cert-thumb-fallback .ln:nth-child(1) { width: 85%; background: var(--accent); opacity: 0.55; }
+  .cert-thumb-fallback .ln:nth-child(2) { width: 60%; }
+  .cert-thumb-fallback .ln:nth-child(3) { width: 70%; }
+  .cert-thumb-fallback .ln:nth-child(4) { width: 45%; }
+
+  .cert-thumb-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: var(--shadow);
+  }
+
+  .cert-thumb-badge img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+  }
+
+  .cert-info { flex: 1; padding-right: 1.75rem; min-width: 0; }
+  .cert-info h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.3; }
+  .cert-info p { font-size: 0.8rem; color: var(--text3); }
+
+  .cert-date {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-top: 0.5rem;
+  }
+
+  .cert-link-icon {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.18s, border-color 0.18s, background 0.18s;
     flex-shrink: 0;
   }
 
-  .cert-info h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
-  .cert-info p { font-size: 0.8rem; color: var(--text3); }
-  .cert-date {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--teal);
-    margin-top: 0.25rem;
+  .cert-card:hover .cert-link-icon {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-dim);
   }
 
   /* ── EXPERIENCE ── */
@@ -574,10 +694,9 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 1.5rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
     transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
     opacity: 0;
     transform: translateY(20px);
@@ -593,6 +712,7 @@
     background: linear-gradient(90deg, var(--accent), var(--teal));
     opacity: 0;
     transition: opacity 0.22s;
+    z-index: 3;
   }
 
   .project-card:hover::before { opacity: 1; }
@@ -609,11 +729,93 @@
     box-shadow: var(--shadow-lg);
   }
 
-  .project-header {
+  /* Image / logo header */
+  .project-image {
+    position: relative;
+    height: 150px;
+    flex-shrink: 0;
+    background: radial-gradient(circle at 50% 38%, var(--surface2), var(--bg2));
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-image img {
+    max-width: 68%;
+    max-height: 68%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+  }
+
+  .project-image-fallback {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    color: #fff;
+    font-size: 1.7rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .project-featured-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 2;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 10px rgba(99,102,241,0.4);
+  }
+
+  .project-links {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    background: rgba(8,11,26,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s, transform 0.18s;
+  }
+
+  .project-link img, .project-link svg { width: 14px; height: 14px; }
+
+  .project-link:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* Body */
+  .project-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
   }
 
   .project-title {
@@ -622,43 +824,71 @@
     line-height: 1.3;
   }
 
-  .project-links {
-    display: flex;
-    gap: 0.4rem;
-    flex-shrink: 0;
-  }
-
-  .project-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px; height: 30px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    color: var(--text3);
-    text-decoration: none;
-    font-size: 0.8rem;
-    transition: color 0.18s, border-color 0.18s, background 0.18s;
-  }
-
-  .project-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-
   .project-desc {
     font-size: 0.85rem;
     color: var(--text2);
     line-height: 1.65;
-    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
+
+  .project-desc.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  .project-see-more {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    margin-top: -0.25rem;
+  }
+
+  .project-see-more:hover { text-decoration: underline; }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.4rem;
   }
+
+  .proj-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.65rem 0.25rem 0.4rem;
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+
+  .proj-tag-icon {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 1px;
+  }
+
+  .proj-tag-icon img { width: 100%; height: 100%; object-fit: contain; }
 
   .project-demo-creds {
     font-family: 'Space Mono', monospace;
@@ -813,6 +1043,36 @@
     border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
+  }
+
+  .skills-category { margin-bottom: 1.4rem; }
+  .skills-category:last-child { margin-bottom: 0; }
+
+  .skills-category-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 0.6rem;
+  }
+
+  .skill-pill-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 2px;
+  }
+
+  .skill-pill-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .download-bar {
@@ -1174,6 +1434,12 @@
       gap: 0.5rem !important;
       page-break-inside: avoid;
     }
+    .skills-category {
+      page-break-inside: avoid;
+    }
+    .skills-category-label {
+      color: #444 !important;
+    }
     .skill-pill {
       border: 1px solid #ccc !important;
       background: transparent !important;
@@ -1182,6 +1448,10 @@
     }
     .skill-pill-dot {
       background: #555 !important;
+    }
+    .skill-pill-icon {
+      background: #fff !important;
+      border: 1px solid #ddd !important;
     }
   }
 </style>
@@ -1214,9 +1484,10 @@
       <div class="hero-grid-overlay"></div>
     </div>
     <div class="hero-content">
-      <img src="Profile.jpg"
-     style="width:200px;height:200px;border:5px solid red;"
-     alt="Profile">
+      <div class="hero-avatar-wrap">
+        <img src="Profile.jpg" alt="Justin Troy Rosalada" class="hero-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="hero-avatar-fallback">JT</div>
+      </div>
       <p class="hero-eyebrow">// Based in Davao City, Philippines</p>
       <h1 class="hero-name">Justin Troy<br><span class="accent">Rosa</span><span class="teal">lada</span></h1>
       <p class="hero-title">CS Student · Cybersecurity · AI/ML · Full-Stack</p>
@@ -1316,30 +1587,55 @@
     <h2 class="section-title">Certifi<span class="accent">cations</span></h2>
     <p class="section-sub">Industry-recognized credentials from Certiport.</p>
     <div class="certs-grid">
-      <div class="cert-card">
-        <div class="cert-badge">🛡️</div>
-        <div class="cert-info">
-          <h4>IT Specialist – Cybersecurity</h4>
-          <p>Certiport</p>
-          <p class="cert-date">May 2026</p>
+
+      <a class="cert-card" href="Cybersecurity_Certificate.pdf" target="_blank" rel="noopener">
+        <div class="cert-thumb">
+          <img src="Cybersecurity_Certificate.png" alt="Cybersecurity certificate" loading="lazy" onerror="imgFallback(this)">
+          <div class="cert-thumb-fallback">
+            <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
+          </div>
+          <div class="cert-thumb-badge">🛡️</div>
         </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">🌐</div>
         <div class="cert-info">
-          <h4>IT Specialist – Network Security</h4>
-          <p>Certiport</p>
-          <p class="cert-date">Mar 2026</p>
+          <h4>Cybersecurity</h4>
+          <p>Certiport — IT Specialist</p>
+          <span class="cert-date">May 2026</span>
         </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-badge">🗄️</div>
+        <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+      </a>
+
+      <a class="cert-card" href="Network_Security_Certificate.pdf" target="_blank" rel="noopener">
+        <div class="cert-thumb">
+          <img src="Network_Security_Certificate.png" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
+          <div class="cert-thumb-fallback">
+            <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
+          </div>
+          <div class="cert-thumb-badge">🌐</div>
+        </div>
         <div class="cert-info">
-          <h4>IT Specialist – Databases</h4>
-          <p>Certiport</p>
-          <p class="cert-date">May 2025</p>
+          <h4>Network Security</h4>
+          <p>Certiport — IT Specialist</p>
+          <span class="cert-date">March 2026</span>
         </div>
-      </div>
+        <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+      </a>
+
+      <a class="cert-card" href="Database_Certificate.pdf" target="_blank" rel="noopener">
+        <div class="cert-thumb">
+          <img src="Database_Certificate.png" alt="Database Fundamentals certificate" loading="lazy" onerror="imgFallback(this)">
+          <div class="cert-thumb-fallback">
+            <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
+          </div>
+          <div class="cert-thumb-badge">🗄️</div>
+        </div>
+        <div class="cert-info">
+          <h4>Database Fundamentals</h4>
+          <p>Certiport — IT Specialist</p>
+          <span class="cert-date">May 2025</span>
+        </div>
+        <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+      </a>
+
     </div>
   </section>
 
@@ -1496,105 +1792,135 @@
       <div class="projects-grid">
 
         <!-- Abstrack -->
-        <div class="project-card" style="border-color:rgba(99,102,241,0.35)">
-          <div class="project-featured">Featured</div>
-          <div class="project-header" style="padding-right:4.5rem">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="AbsTrack_Logo.png" alt="AbsTrack Fitness Gym Management System logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">🏋️</div>
+            <span class="project-featured-badge">Featured</span>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/Siege365/AbsTrackFitnessGymManagementSystem" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
+              <a class="project-link" href="https://abstrackgym.onrender.com/" target="_blank" title="Live Demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            </div>
+          </div>
+          <div class="project-body">
             <h3 class="project-title">AbsTrack Fitness Gym Management System</h3>
-          </div>
-          <div class="project-links" style="position:absolute;top:1rem;right:1rem;flex-direction:row">
-            <a class="project-link" href="https://github.com/Siege365/AbsTrackFitnessGymManagementSystem" target="_blank" title="Source Code">⌥</a>
-            <a class="project-link" href="https://abstrackgym.onrender.com/" target="_blank" title="Live Demo">↗</a>
-          </div>
-          <p class="project-desc">A full-featured gym management system with five integrated subsystems handling member registration, attendance tracking, billing, scheduling, and data-driven gym operations.</p>
-          <div class="project-demo-creds">📧 admin@abstrack.com &nbsp;·&nbsp; 🔑 password</div>
-          <div class="project-tags">
-            <span class="tag">Laravel</span>
-            <span class="tag">PHP</span>
-            <span class="tag">Bootstrap</span>
+            <p class="project-desc">A full-featured gym management system with five integrated subsystems handling member registration, attendance tracking, billing, scheduling, and data-driven gym operations.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-demo-creds">📧 admin@abstrack.com &nbsp;·&nbsp; 🔑 password</div>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/laravel" alt="" loading="lazy" onerror="iconFallback(this)"></div>Laravel</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></div>PHP</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/bootstrap" alt="" loading="lazy" onerror="iconFallback(this)"></div>Bootstrap</div>
+            </div>
           </div>
         </div>
 
         <!-- Fake News Detector -->
-        <div class="project-card" style="border-color:rgba(99,102,241,0.35)">
-          <div class="project-featured">Featured</div>
-          <div class="project-header" style="padding-right:4.5rem">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="FakeNewsDetector_Logo.png" alt="Fake News Detector logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">📰</div>
+            <span class="project-featured-badge">Featured</span>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/Shang-QT/Fake-News-DistilBERT" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
+              <a class="project-link" href="https://fake-news-distilbert-detector.streamlit.app/" target="_blank" title="Live App"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            </div>
+          </div>
+          <div class="project-body">
             <h3 class="project-title">Fake News Detector Using DistilBERT</h3>
-          </div>
-          <div class="project-links" style="position:absolute;top:1rem;right:1rem;flex-direction:row">
-            <a class="project-link" href="https://github.com/Shang-QT/Fake-News-DistilBERT" target="_blank" title="Source Code">⌥</a>
-            <a class="project-link" href="https://fake-news-distilbert-detector.streamlit.app/" target="_blank" title="Live App">↗</a>
-          </div>
-          <p class="project-desc">A machine learning web app that detects fake news using the DistilBERT transformer model. Users can input news text or an image and receive a real-time credibility prediction.</p>
-          <div class="project-tags">
-            <span class="tag">Machine Learning</span>
-            <span class="tag">Python</span>
-            <span class="tag">Streamlit</span>
+            <p class="project-desc">A machine learning web app that detects fake news using the DistilBERT transformer model. Users can input news text or an image and receive a real-time credibility prediction.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="skill-pill-dot"></div>Machine Learning</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy" onerror="iconFallback(this)"></div>Python</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/streamlit" alt="" loading="lazy" onerror="iconFallback(this)"></div>Streamlit</div>
+            </div>
           </div>
         </div>
 
         <!-- Vitapets -->
-        <div class="project-card" style="border-color:rgba(99,102,241,0.35)">
-          <div class="project-featured">Featured</div>
-          <div class="project-header" style="padding-right:4.5rem">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="Vitapets_Logo.png" alt="Vitapets Animal Clinic logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">🐾</div>
+            <span class="project-featured-badge">Featured</span>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/Shang-QT/Vitapets" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
+              <a class="project-link" href="https://vitapetsanimalclinic.great-site.net/" target="_blank" title="Live App"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            </div>
+          </div>
+          <div class="project-body">
             <h3 class="project-title">Vitapets Animal Clinic</h3>
-          </div>
-          <div class="project-links" style="position:absolute;top:1rem;right:1rem;flex-direction:row">
-            <a class="project-link" href="https://github.com/Shang-QT/Vitapets" target="_blank" title="Source Code">⌥</a>
-            <a class="project-link" href="https://vitapetsanimalclinic.great-site.net/" target="_blank" title="Live App">↗</a>
-          </div>
-          <p class="project-desc">A veterinary clinic management system streamlining appointment scheduling, patient records, and pet owner information for clinic staff.</p>
-          <div class="project-tags">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">PHP</span>
+            <p class="project-desc">A veterinary clinic management system streamlining appointment scheduling, patient records, and pet owner information for clinic staff.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/html5" alt="" loading="lazy" onerror="iconFallback(this)"></div>HTML</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/css3" alt="" loading="lazy" onerror="iconFallback(this)"></div>CSS</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/javascript" alt="" loading="lazy" onerror="iconFallback(this)"></div>JavaScript</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></div>PHP</div>
+            </div>
           </div>
         </div>
 
         <!-- Foodtruck -->
         <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">Foodtruck Ordering System</h3>
+          <div class="project-image">
+            <img src="Foodtruck_Logo.png" alt="Foodtruck Ordering System logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">🚚</div>
             <div class="project-links">
-              <a class="project-link" href="https://github.com/Siege365/FoodTruckCompile" target="_blank" title="Source Code">⌥</a>
+              <a class="project-link" href="https://github.com/Siege365/FoodTruckCompile" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
           </div>
-          <p class="project-desc">An online food ordering system for a food truck business, featuring a menu display, cart management, and order processing flow.</p>
-          <div class="project-tags">
-            <span class="tag">JavaFX</span>
-            <span class="tag">MySQL</span>
+          <div class="project-body">
+            <h3 class="project-title">El Pedidos Mexicanos</h3>
+            <p class="project-desc">An online food ordering system for a food truck business, featuring a menu display, cart management, and order processing flow.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="skill-pill-dot"></div>JavaFX</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy" onerror="iconFallback(this)"></div>MySQL</div>
+            </div>
           </div>
         </div>
 
         <!-- ANGA -->
         <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">ANGA University Portal</h3>
+          <div class="project-image">
+            <img src="ANGA_Logo.png" alt="ANGA University Portal logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">🎓</div>
             <div class="project-links">
-              <a class="project-link" href="https://github.com/elbse/DSAFinalProject" target="_blank" title="Source Code">⌥</a>
+              <a class="project-link" href="https://github.com/elbse/DSAFinalProject" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
           </div>
-          <p class="project-desc">A university portal system built as a Data Structures &amp; Algorithms final project. Implements student record management using linked lists with O(m + n) merge complexity.</p>
-          <div class="project-tags">
-            <span class="tag">Java</span>
-            <span class="tag">JavaFX</span>
-            <span class="tag">DSA</span>
+          <div class="project-body">
+            <h3 class="project-title">ANGA University Portal</h3>
+            <p class="project-desc">A university portal system built as a Data Structures &amp; Algorithms final project. Implements student record management using linked lists with O(m + n) merge complexity.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/openjdk" alt="" loading="lazy" onerror="iconFallback(this)"></div>Java</div>
+              <div class="proj-tag"><div class="skill-pill-dot"></div>JavaFX</div>
+              <div class="proj-tag"><div class="skill-pill-dot"></div>DSA</div>
+            </div>
           </div>
         </div>
 
         <!-- Modeng Zoo -->
         <div class="project-card">
-          <div class="project-header">
-            <h3 class="project-title">Modeng Zoo Management System</h3>
+          <div class="project-image">
+            <img src="ModengZoo_Logo.png" alt="Modeng Zoo Management System logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback">🦁</div>
             <div class="project-links">
-              <a class="project-link" href="https://github.com/Juthut2/ZooMS" target="_blank" title="Source Code">⌥</a>
+              <a class="project-link" href="https://github.com/Juthut2/ZooMS" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
           </div>
-          <p class="project-desc">A database-driven zoo management system covering animals, enclosures, staff, care programs, events, ticketing, and visitor management. Designed with ERD-based relational modeling.</p>
-          <div class="project-tags">
-            <span class="tag">MySQL</span>
-            <span class="tag">Database Design</span>
-            <span class="tag">ERD</span>
+          <div class="project-body">
+            <h3 class="project-title">Modeng Zoo Management System</h3>
+            <p class="project-desc">A database-driven zoo management system covering animals, enclosures, staff, care programs, events, ticketing, and visitor management. Designed with ERD-based relational modeling.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy" onerror="iconFallback(this)"></div>MySQL</div>
+              <div class="proj-tag"><div class="skill-pill-dot"></div>Database Design</div>
+              <div class="proj-tag"><div class="skill-pill-dot"></div>ERD</div>
+            </div>
           </div>
         </div>
 
@@ -1700,21 +2026,57 @@
       <h3>Technical Skills</h3>
       <div class="resume-divider"></div>
     </div>
-    <div class="skills-bar-group">
-      <div class="skill-pill"><div class="skill-pill-dot"></div>Python</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>Java</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>JavaScript</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>SQL</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>PHP</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>HTML / CSS</div>
-      <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>Laravel</div>
-      <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>Django</div>
-      <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>Bootstrap</div>
-      <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>Streamlit</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>Git / GitHub</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>Threat Analysis</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>Network Security</div>
-      <div class="skill-pill"><div class="skill-pill-dot"></div>AI/ML Systems</div>
+    <div class="skills-category">
+      <p class="skills-category-label">Programming Languages</p>
+      <div class="skills-bar-group">
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy" onerror="iconFallback(this)"></div>Python</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/openjdk" alt="" loading="lazy" onerror="iconFallback(this)"></div>Java</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/javascript" alt="" loading="lazy" onerror="iconFallback(this)"></div>JavaScript</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></div>PHP</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/html5" alt="" loading="lazy" onerror="iconFallback(this)"></div>HTML5</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/css3" alt="" loading="lazy" onerror="iconFallback(this)"></div>CSS3</div>
+      </div>
+    </div>
+
+    <div class="skills-category">
+      <p class="skills-category-label">Frameworks &amp; Libraries</p>
+      <div class="skills-bar-group">
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/laravel" alt="" loading="lazy" onerror="iconFallback(this)"></div>Laravel</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/django" alt="" loading="lazy" onerror="iconFallback(this)"></div>Django</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/bootstrap" alt="" loading="lazy" onerror="iconFallback(this)"></div>Bootstrap</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/streamlit" alt="" loading="lazy" onerror="iconFallback(this)"></div>Streamlit</div>
+      </div>
+    </div>
+
+    <div class="skills-category">
+      <p class="skills-category-label">Databases</p>
+      <div class="skills-bar-group">
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy" onerror="iconFallback(this)"></div>MySQL</div>
+        <div class="skill-pill"><div class="skill-pill-dot"></div>SQL</div>
+      </div>
+    </div>
+
+    <div class="skills-category">
+      <p class="skills-category-label">Tools &amp; AI</p>
+      <div class="skills-bar-group">
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/git" alt="" loading="lazy" onerror="iconFallback(this)"></div>Git</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/github" alt="" loading="lazy" onerror="iconFallback(this)"></div>GitHub</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/visualstudiocode" alt="" loading="lazy" onerror="iconFallback(this)"></div>VS Code</div>
+        <div class="skill-pill"><div class="skill-pill-icon"><img src="https://cdn.simpleicons.org/openai" alt="" loading="lazy" onerror="iconFallback(this)"></div>AI Tools / Prompt Eng.</div>
+        <div class="skill-pill"><div class="skill-pill-dot"></div>Threat Analysis</div>
+        <div class="skill-pill"><div class="skill-pill-dot"></div>Network Security</div>
+      </div>
+    </div>
+
+    <div class="skills-category">
+      <p class="skills-category-label">AI &amp; Machine Learning</p>
+      <div class="skills-bar-group">
+        <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>DistilBERT</div>
+        <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>BERTweet</div>
+        <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>NLP</div>
+        <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>OCR</div>
+        <div class="skill-pill"><div class="skill-pill-dot" style="background:var(--teal)"></div>AI/ML Systems</div>
+      </div>
     </div>
 
     <!-- Research -->
@@ -1858,6 +2220,27 @@
     document.getElementById('nav-' + name).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => initObserver(), 100);
+  }
+
+  // ── PROJECT "SEE MORE" TOGGLE ──
+  function toggleProjectDesc(btn) {
+    const desc = btn.previousElementSibling;
+    const expanded = desc.classList.toggle('expanded');
+    btn.textContent = expanded ? 'See Less ←' : 'See More →';
+  }
+
+  // ── GENERIC IMAGE FALLBACK (hides a broken img, reveals its fallback sibling) ──
+  function imgFallback(img) {
+    img.style.display = 'none';
+    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+  }
+
+  // ── ICON FALLBACK (for skill logo CDN images) ──
+  function iconFallback(img) {
+    const wrap = img.parentElement;
+    const dot = document.createElement('div');
+    dot.className = 'skill-pill-dot';
+    wrap.replaceWith(dot);
   }
 
   // ── THEME ──
