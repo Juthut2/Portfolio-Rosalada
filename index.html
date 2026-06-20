@@ -155,6 +155,39 @@
 
   .theme-toggle:hover { transform: scale(1.1); background: var(--accent-dim); color: var(--accent); }
 
+  .back-to-top {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    z-index: 90;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    background: var(--accent-glow);
+    transform: translateY(-3px) scale(1.05);
+  }
+
   /* ── PAGES ── */
   .page {
     display: none;
@@ -224,6 +257,41 @@
   @keyframes drift {
     0% { transform: translate(0, 0) scale(1); }
     100% { transform: translate(30px, 20px) scale(1.08); }
+  }
+
+  .orb-field {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s ease-out;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    animation: twinkle ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.7); }
+    50% { opacity: 0.8; transform: translateY(-14px) scale(1.3); }
+  }
+
+  .wave-emoji {
+    display: inline-block;
+    animation: wave 2.4s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
   }
 
   .hero-grid-overlay {
@@ -413,12 +481,27 @@
   }
 
   .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(-2px) scale(0.96); }
 
   .btn-primary {
     background: var(--accent);
     color: #fff;
     box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+    position: relative;
+    overflow: hidden;
   }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+  }
+
+  .btn-primary:hover::after { left: 125%; }
 
   .btn-primary:hover { box-shadow: 0 6px 24px rgba(99,102,241,0.5); }
 
@@ -488,7 +571,9 @@
   }
 
   .skill-card:hover {
-    border-color: var(--border2);
+    border-right-color: var(--border2);
+    border-bottom-color: var(--border2);
+    border-left-color: var(--border2);
     transform: translateY(-3px);
     box-shadow: var(--shadow);
   }
@@ -565,6 +650,7 @@
     position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
     border-radius: 14px;
     padding: 1.25rem 1.5rem;
     display: flex;
@@ -585,7 +671,9 @@
 
   .cert-card:hover {
     transform: translateY(-3px);
-    border-color: var(--accent);
+    border-right-color: var(--accent);
+    border-bottom-color: var(--accent);
+    border-left-color: var(--accent);
     box-shadow: 0 0 0 1px var(--accent-dim), var(--shadow);
   }
 
@@ -642,7 +730,10 @@
     justify-content: center;
     font-size: 0.8rem;
     box-shadow: var(--shadow);
+    transition: transform 0.25s ease;
   }
+
+  .cert-card:hover .cert-thumb-badge { transform: rotate(12deg) scale(1.15); }
 
   .cert-thumb-badge img {
     width: 14px;
@@ -834,7 +925,10 @@
     max-height: 68%;
     object-fit: contain;
     filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+    transition: transform 0.35s ease;
   }
+
+  .project-card:hover .project-image img { transform: scale(1.08); }
 
   .project-image-fallback {
     display: none;
@@ -1207,6 +1301,76 @@
     box-shadow: -4px 0 0 var(--accent);
   }
 
+  .local-time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+  }
+
+  .local-time-badge strong {
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+  }
+
+  .copy-btn:hover {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.08);
+  }
+
+  .copy-btn.copied {
+    background: #22C55E;
+    color: #fff;
+    border-color: #22C55E;
+  }
+
+  .qr-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .qr-card img {
+    width: 84px; height: 84px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 6px;
+    flex-shrink: 0;
+  }
+
+  .qr-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .qr-sub { font-size: 0.76rem; color: var(--text3); line-height: 1.5; }
+
   .contact-item-icon {
     width: 40px; height: 40px;
     border-radius: 10px;
@@ -1215,7 +1379,10 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 1.1rem;
     flex-shrink: 0;
+    transition: transform 0.25s ease;
   }
+
+  .contact-item:hover .contact-item-icon { transform: rotate(8deg) scale(1.1); }
 
   .contact-item-text p:first-child { font-size: 0.78rem; color: var(--text3); margin-bottom: 0.15rem; }
   .contact-item-text p:last-child { font-size: 0.9rem; font-weight: 500; }
@@ -1334,10 +1501,6 @@
 
   /* Scroll indicator */
   .scroll-hint {
-    position: absolute;
-    bottom: 1rem;
-    left: 49%;
-    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1345,6 +1508,7 @@
     color: var(--text3);
     font-size: 0.72rem;
     letter-spacing: 0.1em;
+    margin-top: 2.75rem;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 1.2s;
   }
@@ -1372,36 +1536,56 @@
   .org-card {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     opacity: 0;
     transform: translateY(16px);
   }
 
   .org-card.visible {
     opacity: 1; transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s;
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, box-shadow 0.2s;
   }
 
-  .org-card:hover { transform: translateY(-3px); border-color: var(--border2); }
+  .org-card:hover {
+    transform: translateY(-3px);
+    border-right-color: var(--border2);
+    border-bottom-color: var(--border2);
+    border-left-color: var(--border2);
+    box-shadow: var(--shadow);
+  }
 
   .org-icon {
     width: 42px; height: 42px;
     border-radius: 10px;
-    background: var(--teal-dim);
-    color: var(--teal);
+    background: var(--accent-dim);
+    color: var(--accent);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem;
     flex-shrink: 0;
+    box-shadow: 0 6px 16px -4px rgba(99,102,241,0.4);
+    transition: transform 0.25s ease;
   }
+
+  .org-card:hover .org-icon { transform: rotate(-8deg) scale(1.1); }
 
   .org-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.3; }
   .org-info p { font-size: 0.78rem; color: var(--text3); }
-  .org-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); margin-top: 0.25rem; }
+  .org-date {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-top: 0.4rem;
+  }
 
   .stat-card {
     background: var(--surface);
@@ -1410,6 +1594,14 @@
     padding: 1.25rem;
     text-align: center;
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .stat-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, box-shadow 0.2s;
   }
 
   .stat-card:hover {
@@ -1431,6 +1623,63 @@
 
   .focus-card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
 
+  /* Terminal widget */
+  .terminal-card {
+    background: #0B0E1F;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 2rem 0 2.5rem;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .terminal-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .terminal-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    background: #15182E;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .terminal-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+  .terminal-chrome-title {
+    margin-left: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: #6B7094;
+  }
+
+  .terminal-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    min-height: 150px;
+  }
+
+  .terminal-line { color: #C7CAE8; }
+  .terminal-prompt { color: #22D3EE; }
+  .terminal-output { color: #8A8FB8; white-space: pre-wrap; padding-left: 1.1rem; }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    background: #22D3EE;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
   /* Seminars */
   .seminars-list {
     display: flex;
@@ -1441,29 +1690,53 @@
   .seminar-item {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
     border-radius: 10px;
     padding: 1rem 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    transition: border-color 0.18s;
+    gap: 1.1rem;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     opacity: 0;
     transform: translateX(-12px);
   }
 
   .seminar-item.visible {
     opacity: 1; transform: translateX(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, box-shadow 0.2s;
   }
 
-  .seminar-item:hover { border-color: var(--border2); }
+  .seminar-item:hover {
+    transform: translateX(2px) translateY(-2px);
+    border-top-color: var(--border2);
+    border-right-color: var(--border2);
+    border-bottom-color: var(--border2);
+    box-shadow: var(--shadow);
+  }
+
+  .seminar-icon {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px -4px rgba(99,102,241,0.4);
+    transition: transform 0.25s ease;
+  }
+
+  .seminar-item:hover .seminar-icon { transform: scale(1.1) rotate(6deg); }
 
   .seminar-year {
+    display: inline-block;
     font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--teal);
+    font-size: 0.68rem;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
     flex-shrink: 0;
-    min-width: 50px;
   }
 
   .seminar-text h4 { font-size: 0.9rem; font-weight: 600; }
@@ -1586,6 +1859,8 @@
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
 </nav>
 
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
+
 <!-- ════════════════════════════════════════
      PAGE: ABOUT
 ════════════════════════════════════════ -->
@@ -1593,11 +1868,21 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
-      <div class="orb orb1"></div>
-      <div class="orb orb2"></div>
-      <div class="orb orb3"></div>
+    <div class="hero-bg" id="heroBg">
+      <div class="orb-field" id="orbField">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+      </div>
       <div class="hero-grid-overlay"></div>
+      <span class="particle" style="top:18%;left:12%;background:var(--accent);animation-duration:4.5s;animation-delay:0s"></span>
+      <span class="particle" style="top:32%;left:78%;background:var(--teal);animation-duration:5.2s;animation-delay:0.8s"></span>
+      <span class="particle" style="top:62%;left:8%;background:var(--teal);animation-duration:4.8s;animation-delay:1.6s"></span>
+      <span class="particle" style="top:75%;left:85%;background:var(--accent);animation-duration:5.6s;animation-delay:0.4s"></span>
+      <span class="particle" style="top:10%;left:55%;background:var(--accent);animation-duration:4.2s;animation-delay:2.1s"></span>
+      <span class="particle" style="top:50%;left:92%;background:var(--teal);animation-duration:5.9s;animation-delay:1.2s"></span>
+      <span class="particle" style="top:85%;left:40%;background:var(--accent);animation-duration:4.6s;animation-delay:2.6s"></span>
+      <span class="particle" style="top:40%;left:25%;background:var(--teal);animation-duration:5.3s;animation-delay:3.1s"></span>
     </div>
     <div class="hero-content">
       <div class="hero-avatar-wrap">
@@ -1605,7 +1890,7 @@
         <div class="hero-avatar-fallback">JT</div>
       </div>
       <p class="hero-eyebrow">// Based in Davao City, Philippines</p>
-      <h1 class="hero-name">Justin Troy<br><span class="accent">Rosa</span><span class="teal">lada</span></h1>
+      <h1 class="hero-name"><span class="wave-emoji">👋</span> Justin Troy<br><span class="accent">Rosa</span><span class="teal">lada</span></h1>
       <p class="hero-title">CS Student · Cybersecurity · AI/ML · Full-Stack</p>
       <div class="status-badge"><span class="status-dot"></span>Open to OJT opportunities</div>
       <p class="hero-desc" id="typewriter-text" data-text="Hello! I'm a third-year Computer Science student at the University of Mindanao. I'm passionate about building intelligent systems, detecting misinformation, and crafting full-stack applications that actually work. I love exploring new technologies and solving complex problems with code."></p>
@@ -1722,7 +2007,7 @@
         <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
       </a>
 
-      <a class="cert-card" href="Network_Security_Certificate.pdf" target="_blank" rel="noopener">
+      <a class="cert-card" href="Network_Security_Certificate.pdf" target="_blank" rel="noopener" style="border-top-color:var(--teal)">
         <div class="cert-thumb">
           <img src="Network_Security_Certificate.jpg" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
@@ -1771,8 +2056,8 @@
           <p class="org-date">Aug 2025 – May 2026</p>
         </div>
       </div>
-      <div class="org-card">
-        <div class="org-icon">⛓️</div>
+      <div class="org-card" style="border-top-color:var(--teal)">
+        <div class="org-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">⛓️</div>
         <div class="org-info">
           <h4>Junior Blockchain Education Consortium – UM Davao</h4>
           <p>Member — promoting blockchain education and Web3 awareness among Filipino students.</p>
@@ -1797,13 +2082,15 @@
     <p class="section-sub">Conferences and workshops I've attended and contributed to.</p>
     <div class="seminars-list">
       <div class="seminar-item">
+        <div class="seminar-icon">🎤</div>
         <span class="seminar-year">2025</span>
         <div class="seminar-text">
           <h4>DevFest Davao 2025 – GDG Davao</h4>
           <p>"Building Safe, Secure, and Scalable Solutions with AI and Cloud" — Vertex AI, Gemini API, Cloud-Native Dev</p>
         </div>
       </div>
-      <div class="seminar-item">
+      <div class="seminar-item" style="border-left-color:var(--teal)">
+        <div class="seminar-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🤖</div>
         <span class="seminar-year">2025</span>
         <div class="seminar-text">
           <h4>Build with AI Davao 2025 – GDG Davao</h4>
@@ -1811,6 +2098,7 @@
         </div>
       </div>
       <div class="seminar-item">
+        <div class="seminar-icon">⛓️</div>
         <span class="seminar-year">2024</span>
         <div class="seminar-text">
           <h4>Blockchain Campus Conference 2024 – Logistics Volunteer</h4>
@@ -1833,6 +2121,16 @@
     <p class="section-label">// work &amp; research</p>
     <h2 class="section-title">Experience &amp; <span class="accent">Projects</span></h2>
     <p class="section-sub">Real work, academic research, and the projects I've shipped.</p>
+
+    <div class="terminal-card" id="terminalCard">
+      <div class="terminal-chrome">
+        <span class="terminal-dot" style="background:#FF5F56"></span>
+        <span class="terminal-dot" style="background:#FFBD2E"></span>
+        <span class="terminal-dot" style="background:#27C93F"></span>
+        <span class="terminal-chrome-title">justin@portfolio:~</span>
+      </div>
+      <div class="terminal-body" id="terminalBody"></div>
+    </div>
 
     <div class="exp-layout">
       <!-- LEFT: Work & Research Timeline -->
@@ -1873,19 +2171,19 @@
         <h3 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1.5rem;font-family:'Space Mono',monospace">Quick Stats</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem">
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--accent)">3+</p>
+            <p class="stat-num" style="color:var(--accent)" data-count="3" data-suffix="+">0</p>
             <p class="stat-label">Certiport Certs</p>
           </div>
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--teal)">6+</p>
+            <p class="stat-num" style="color:var(--teal)" data-count="6" data-suffix="+">0</p>
             <p class="stat-label">Projects Built</p>
           </div>
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--accent)">3</p>
+            <p class="stat-num" style="color:var(--accent)" data-count="3" data-suffix="">0</p>
             <p class="stat-label">Tech Communities</p>
           </div>
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--teal)">3rd</p>
+            <p class="stat-num" style="color:var(--teal)" data-count="3" data-suffix="rd">0</p>
             <p class="stat-label">Year CS Student</p>
           </div>
         </div>
@@ -2263,7 +2561,13 @@
 
     <div class="contact-layout">
       <div>
-        <p style="font-size:0.95rem;color:var(--text2);line-height:1.75;margin-bottom:1.5rem">I'm currently looking for an OJT/internship where I can apply my skills in cybersecurity, AI/ML, and full-stack development. If you think we'd be a good fit, let's talk.</p>
+        <p style="font-size:0.95rem;color:var(--text2);line-height:1.75;margin-bottom:1rem">I'm currently looking for an OJT/internship where I can apply my skills in cybersecurity, AI/ML, and full-stack development. If you think we'd be a good fit, let's talk.</p>
+
+        <div class="local-time-badge">
+          <span id="localTimeEmoji">🌙</span>
+          <span>It's currently <strong id="localTimeText">--:--</strong> in Davao City</span>
+        </div>
+
         <div class="contact-info-list">
           <a class="contact-item" href="mailto:jtrosalada@gmail.com">
             <div class="contact-item-icon">✉️</div>
@@ -2271,6 +2575,7 @@
               <p>Email</p>
               <p>jtrosalada@gmail.com</p>
             </div>
+            <button class="copy-btn" onclick="copyToClipboard(event, 'jtrosalada@gmail.com', this)" title="Copy email" aria-label="Copy email">📋</button>
           </a>
           <a class="contact-item" href="tel:+639953697075">
             <div class="contact-item-icon">📱</div>
@@ -2278,6 +2583,7 @@
               <p>Phone</p>
               <p>+63 9953697075</p>
             </div>
+            <button class="copy-btn" onclick="copyToClipboard(event, '+639953697075', this)" title="Copy phone number" aria-label="Copy phone number">📋</button>
           </a>
           <a class="contact-item" href="https://github.com/Juthut2" target="_blank">
             <div class="contact-item-icon">🎓</div>
@@ -2299,6 +2605,14 @@
               <p>Location</p>
               <p>Davao City, Philippines</p>
             </div>
+          </div>
+        </div>
+
+        <div class="qr-card">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=mailto%3Ajtrosalada%40gmail.com" alt="QR code that opens an email to Justin" loading="lazy" onerror="this.parentElement.style.display='none'">
+          <div>
+            <p class="qr-title">📱 Scan to email me</p>
+            <p class="qr-sub">Meeting in person? Point your camera here to fire off an email straight to my inbox.</p>
           </div>
         </div>
       </div>
@@ -2340,6 +2654,94 @@
     setTimeout(() => initObserver(), 100);
   }
 
+  // ── TERMINAL TYPING EFFECT ──
+  function typeTerminal() {
+    const body = document.getElementById('terminalBody');
+    if (!body) return;
+    const lines = [
+      { type: 'cmd', text: 'whoami' },
+      { type: 'out', text: 'justin-troy-rosalada' },
+      { type: 'cmd', text: 'cat status.txt' },
+      { type: 'out', text: '3rd-year CS student @ University of Mindanao\nOpen to OJT opportunities\nCurrently debugging: misinformation in disaster-related posts' },
+      { type: 'cmd', text: './skills.sh --top' },
+      { type: 'out', text: '[OK] Cybersecurity   [OK] AI/ML   [OK] Full-Stack Dev' }
+    ];
+    let li = 0;
+    function nextLine() {
+      if (li >= lines.length) {
+        const cursor = document.createElement('span');
+        cursor.className = 'terminal-cursor';
+        body.appendChild(cursor);
+        return;
+      }
+      const line = lines[li];
+      const p = document.createElement('div');
+      p.className = 'terminal-line';
+      body.appendChild(p);
+      if (line.type === 'cmd') {
+        const prompt = document.createElement('span');
+        prompt.className = 'terminal-prompt';
+        prompt.textContent = '$ ';
+        p.appendChild(prompt);
+        const span = document.createElement('span');
+        p.appendChild(span);
+        let ci = 0;
+        (function typeChar() {
+          if (ci < line.text.length) {
+            span.textContent += line.text.charAt(ci);
+            ci++;
+            setTimeout(typeChar, 35);
+          } else {
+            li++;
+            setTimeout(nextLine, 350);
+          }
+        })();
+      } else {
+        p.classList.add('terminal-output');
+        p.textContent = line.text;
+        li++;
+        setTimeout(nextLine, 500);
+      }
+    }
+    nextLine();
+  }
+
+  function initTerminal() {
+    const card = document.getElementById('terminalCard');
+    if (!card) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          card.classList.add('visible');
+          typeTerminal();
+          obs.unobserve(card);
+        }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(card);
+  }
+
+  // ── STAT COUNT-UP ──
+  function animateCount(card) {
+    const el = card.querySelector('.stat-num');
+    if (!el || el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = parseFloat(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    if (isNaN(target)) return;
+    const duration = 900;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(target * eased);
+      el.textContent = value + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
   // ── PROJECT "SEE MORE" TOGGLE ──
   function toggleProjectDesc(btn) {
     const desc = btn.previousElementSibling;
@@ -2361,12 +2763,69 @@
     wrap.replaceWith(dot);
   }
 
+  // ── SPARKLE BURST (small delight on theme toggle) ──
+  function sparkleBurst(x, y) {
+    const colors = ['#6366F1', '#22D3EE', '#EC4899', '#FBBF24'];
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('span');
+      const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.3;
+      const dist = 28 + Math.random() * 26;
+      s.style.position = 'fixed';
+      s.style.left = x + 'px';
+      s.style.top = y + 'px';
+      s.style.width = '6px';
+      s.style.height = '6px';
+      s.style.borderRadius = '50%';
+      s.style.background = colors[i % colors.length];
+      s.style.pointerEvents = 'none';
+      s.style.zIndex = '9999';
+      s.style.opacity = '1';
+      s.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
+      document.body.appendChild(s);
+      requestAnimationFrame(() => {
+        s.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
+        s.style.opacity = '0';
+      });
+      setTimeout(() => s.remove(), 650);
+    }
+  }
+
   // ── THEME ──
   function toggleTheme() {
     const html = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    document.querySelector('.theme-toggle').textContent = isDark ? '🌙' : '☀️';
+    const btn = document.querySelector('.theme-toggle');
+    btn.textContent = isDark ? '🌙' : '☀️';
+    const rect = btn.getBoundingClientRect();
+    sparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+
+  // ── HERO ORB PARALLAX ──
+  function initHeroParallax() {
+    const hero = document.querySelector('.hero');
+    const orbField = document.getElementById('orbField');
+    if (!hero || !orbField) return;
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      orbField.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+    });
+    hero.addEventListener('mouseleave', () => {
+      orbField.style.transform = 'translate(0, 0)';
+    });
+  }
+
+  // ── BACK TO TOP ──
+  function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    });
   }
 
   // ── SCROLL ANIMATIONS ──
@@ -2378,6 +2837,7 @@
       .page.active .timeline-item, 
       .page.active .seminar-item, 
       .page.active .project-card, 
+      .page.active .stat-card,
       .page.active .fade-in,
       .page.active .section-label,
       .page.active .section-title,
@@ -2395,7 +2855,10 @@
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          setTimeout(() => {
+            e.target.classList.add('visible');
+            if (e.target.classList.contains('stat-card')) animateCount(e.target);
+          }, i * 60);
           obs.unobserve(e.target);
         }
       });
@@ -2421,9 +2884,54 @@
     }, 1000);
   }
 
+  // ── COPY TO CLIPBOARD ──
+  function copyToClipboard(event, text, btn) {
+    event.preventDefault();
+    event.stopPropagation();
+    const original = btn.textContent;
+    function showCopied() {
+      btn.textContent = '✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showCopied).catch(() => alert('Could not copy. Here it is: ' + text));
+    } else {
+      alert('Could not copy. Here it is: ' + text);
+    }
+  }
+
+  // ── LIVE DAVAO CLOCK ──
+  function updateLocalClock() {
+    const elText = document.getElementById('localTimeText');
+    const elEmoji = document.getElementById('localTimeEmoji');
+    if (!elText) return;
+    const now = new Date();
+    elText.textContent = now.toLocaleTimeString('en-PH', { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+    const hour = parseInt(now.toLocaleTimeString('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', hour12: false }), 10);
+    let emoji = '🌙';
+    if (hour >= 5 && hour < 12) emoji = '🌅';
+    else if (hour >= 12 && hour < 18) emoji = '☀️';
+    else if (hour >= 18 && hour < 21) emoji = '🌇';
+    if (elEmoji) elEmoji.textContent = emoji;
+  }
+
+  function initLocalClock() {
+    if (!document.getElementById('localTimeText')) return;
+    updateLocalClock();
+    setInterval(updateLocalClock, 1000);
+  }
+
   // ── INIT ──
   window.addEventListener('DOMContentLoaded', () => {
     initObserver();
+    initHeroParallax();
+    initBackToTop();
+    initTerminal();
+    initLocalClock();
 
     // Typewriter Effect
     const twElement = document.getElementById('typewriter-text');
