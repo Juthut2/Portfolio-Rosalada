@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
   :root {
     --accent: #6366F1;
@@ -154,6 +155,7 @@
   }
 
   .theme-toggle:hover { transform: scale(1.1); background: var(--accent-dim); color: var(--accent); }
+  .theme-toggle svg { width: 18px; height: 18px; }
 
   .back-to-top {
     position: fixed;
@@ -383,8 +385,8 @@
     animation: fadeUp 0.6s ease forwards 0.35s;
   }
 
-  .hero-name .accent { color: var(--accent); }
-  .hero-name .teal { color: var(--teal); }
+  .accent { color: var(--accent); }
+  .teal { color: var(--teal); }
 
   .hero-title {
     font-size: clamp(1rem, 2.5vw, 1.35rem);
@@ -432,7 +434,7 @@
     line-height: 1.75;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.65s;
-    min-height: 110px; /* Reserves space so page doesn't jump while typing */
+    min-height: 60px; /* Reserves space so page doesn't jump while typing */
   }
 
   .hero-desc::after {
@@ -537,7 +539,6 @@
     line-height: 1.2;
   }
 
-  .section-title .accent { color: var(--accent); }
 
   .section-sub {
     color: var(--text2);
@@ -580,11 +581,35 @@
 
   .skill-card:hover .skill-card-icon { transform: scale(1.08); }
 
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* Lucide icon sizing across the icon-chip components */
+  .skill-card-icon svg { width: 20px; height: 20px; }
+  .org-icon svg { width: 20px; height: 20px; }
+  .seminar-icon svg { width: 17px; height: 17px; }
+  .cert-thumb-badge svg { width: 13px; height: 13px; }
+  .contact-item-icon svg { width: 18px; height: 18px; }
+  .copy-btn svg { width: 15px; height: 15px; }
+  .project-image-fallback svg { width: 28px; height: 28px; stroke-width: 1.75; }
+  .tag-icon svg { width: 11px; height: 11px; }
+  .qr-title svg, .form-success svg { width: 16px; height: 16px; vertical-align: -3px; stroke-width: 2; }
+  .project-demo-creds svg { width: 13px; height: 13px; vertical-align: -2px; }
+  .resume-contact svg { width: 13px; height: 13px; vertical-align: -2px; }
+  .footer-heart svg { fill: #EC4899; stroke: #EC4899; width: 14px; height: 14px; vertical-align: -2px; }
+  .footer-socials svg { width: 16px; height: 16px; }
+  .clock-icon { width: 15px; height: 15px; }
+
   .skill-card-icon {
     width: 42px;
     height: 42px;
     border-radius: 10px;
     background: var(--accent-dim);
+    color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -592,6 +617,13 @@
     margin-bottom: 0.9rem;
     box-shadow: 0 6px 16px -4px rgba(99,102,241,0.4);
     transition: transform 0.2s;
+  }
+
+  .skill-card-desc {
+    font-size: 0.8rem;
+    color: var(--text3);
+    line-height: 1.6;
+    text-align: justify;
   }
 
   .skill-card-title {
@@ -638,6 +670,108 @@
     background: var(--teal-dim);
     color: var(--teal);
   }
+
+  /* About Me */
+  .about-me-section { position: relative; overflow: hidden; }
+
+  .about-watermark {
+    position: absolute;
+    top: -2.5rem;
+    right: -0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 11rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.05;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .about-me-layout {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 3rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 700px) {
+    .about-me-layout { grid-template-columns: 1fr; }
+    .about-me-photo-card { order: -1; max-width: 210px; margin: 0 auto 1.5rem; }
+  }
+
+  .about-me-text p {
+    font-size: 0.95rem;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 1.1rem;
+    text-align: justify;
+  }
+
+  .about-me-text p:first-child {
+    text-align: left;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .about-me-text p:last-child { margin-bottom: 0; }
+
+  .about-pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 1.25rem;
+    margin: 1.5rem 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .about-me-photo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    text-align: center;
+    transform: rotate(-2deg);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease;
+  }
+
+  .about-me-photo-card:hover { transform: rotate(0deg) translateY(-4px); }
+
+  .about-photo-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+  }
+
+  .about-photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-photo-fallback {
+    position: absolute; inset: 0;
+    display: none;
+    align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .about-photo-caption { font-weight: 600; font-size: 0.92rem; color: var(--text); }
+  .about-photo-role { font-size: 0.74rem; color: var(--text3); font-family: 'Space Mono', monospace; margin-top: 0.25rem; }
 
   /* Certs */
   .certs-grid {
@@ -724,6 +858,7 @@
     height: 26px;
     border-radius: 50%;
     background: var(--surface2);
+    color: var(--accent);
     border: 1px solid var(--border2);
     display: flex;
     align-items: center;
@@ -859,6 +994,7 @@
     font-size: 0.85rem;
     color: var(--text2);
     line-height: 1.65;
+    text-align: justify;
   }
 
   /* Projects Grid */
@@ -1010,6 +1146,7 @@
     font-size: 0.85rem;
     color: var(--text2);
     line-height: 1.65;
+    text-align: justify;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -1192,6 +1329,7 @@
     color: var(--text2);
     line-height: 1.65;
     margin-top: 0.4rem;
+    text-align: justify;
   }
 
   .resume-entry ul {
@@ -1463,16 +1601,92 @@
 
   /* ── FOOTER ── */
   footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text3);
-    font-size: 0.8rem;
     border-top: 1px solid var(--border);
     margin-top: 3rem;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .footer-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .footer-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text3);
+    margin-top: 0.25rem;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-nav a {
+    font-size: 0.85rem;
+    color: var(--text2);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.18s;
+  }
+
+  .footer-nav a:hover { color: var(--accent); }
+
+  .footer-socials {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .footer-socials a {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: border-color 0.18s, color 0.18s, transform 0.18s, background 0.18s;
+  }
+
+  .footer-socials a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+    transform: translateY(-2px);
+  }
+
+  .footer-socials a img { width: 16px; height: 16px; }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text3);
+    font-size: 0.78rem;
     font-family: 'Space Mono', monospace;
   }
 
-  footer span { color: var(--accent); }
 
   /* ── SCROLL ANIMATIONS ── */
   .fade-in,
@@ -1575,7 +1789,7 @@
   .org-card:hover .org-icon { transform: rotate(-8deg) scale(1.1); }
 
   .org-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.3; }
-  .org-info p { font-size: 0.78rem; color: var(--text3); }
+  .org-info p { font-size: 0.78rem; color: var(--text3); text-align: justify; }
   .org-date {
     display: inline-block;
     font-family: 'Space Mono', monospace;
@@ -1740,7 +1954,7 @@
   }
 
   .seminar-text h4 { font-size: 0.9rem; font-weight: 600; }
-  .seminar-text p { font-size: 0.8rem; color: var(--text3); margin-top: 0.15rem; }
+  .seminar-text p { font-size: 0.8rem; color: var(--text3); margin-top: 0.15rem; text-align: justify; }
 
   /* ── PRINT (PDF) STYLES ── */
   @media print {
@@ -1856,7 +2070,7 @@
     <li><a href="Rosalada_Resume.pdf" target="_blank" id="nav-resume">Resume</a></li>
     <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
   </ul>
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><i data-lucide="sun" class="icon-sun"></i><i data-lucide="moon" class="icon-moon" style="display:none"></i></button>
 </nav>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
@@ -1893,7 +2107,7 @@
       <h1 class="hero-name"><span class="wave-emoji">👋</span> Justin Troy<br><span class="accent">Rosa</span><span class="teal">lada</span></h1>
       <p class="hero-title">CS Student · Cybersecurity · AI/ML · Full-Stack</p>
       <div class="status-badge"><span class="status-dot"></span>Open to OJT opportunities</div>
-      <p class="hero-desc" id="typewriter-text" data-text="Hello! I'm a third-year Computer Science student at the University of Mindanao. I'm passionate about building intelligent systems, detecting misinformation, and crafting full-stack applications that actually work. I love exploring new technologies and solving complex problems with code."></p>
+      <p class="hero-desc" id="typewriter-text" data-text="Building secure, intelligent systems — from full-stack web applications to AI models that catch misinformation before it spreads further."></p>
       <div class="hero-ctas">
         <button class="btn btn-primary" onclick="showPage('experience')">View My Work</button>
         <button class="btn btn-outline" onclick="showPage('contact')">Get In Touch</button>
@@ -1907,6 +2121,32 @@
 
   <div class="divider"></div>
 
+  <!-- ABOUT ME -->
+  <section class="section about-me-section">
+    <span class="about-watermark">&lt;/&gt;</span>
+    <p class="section-label">// the human behind the code</p>
+    <h2 class="section-title">About <span class="accent">Me</span></h2>
+    <div class="about-me-layout">
+      <div class="about-me-text fade-in">
+        <p><strong>Hi there! I'm Justin Troy Rosalada.</strong></p>
+        <p>I'm a third-year Computer Science student at the University of Mindanao with interests in <span class="accent">artificial intelligence</span>, <span class="teal">cybersecurity</span>, and <span class="accent">full-stack development</span>. I enjoy building practical applications, exploring emerging technologies, and solving real-world problems through code.</p>
+        <p>My journey in software development started with web development and gradually expanded into machine learning and intelligent systems. I have experience working with technologies such as Python, Java, PHP, Laravel, Django, and JavaScript, and I'm currently conducting research on <span class="teal">OCR and transformer-based models</span> for disaster-related fake news detection.</p>
+        <blockquote class="about-pull-quote">"Continuous learning and curiosity are essential to growth."</blockquote>
+        <p>Whether I'm developing applications, experimenting with AI models, or learning new tools, I strive to create solutions that are both <span class="accent">efficient</span> and <span class="teal">impactful</span>.</p>
+      </div>
+      <div class="about-me-photo-card fade-in">
+        <div class="about-photo-frame">
+          <img src="About2.jpg" alt="Justin Troy Rosalada" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="about-photo-fallback">JT</div>
+        </div>
+        <p class="about-photo-caption">Justin Troy Rosalada</p>
+        <p class="about-photo-role">Davao City, PH</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- SKILLS -->
   <section class="section">
     <p class="section-label">// what I work with</p>
@@ -1914,19 +2154,19 @@
     <p class="section-sub">From cybersecurity to AI systems, here's what I bring to the table.</p>
     <div class="skills-grid">
       <div class="skill-card">
-        <div class="skill-card-icon">🔐</div>
+        <div class="skill-card-icon"><i data-lucide="shield"></i></div>
         <div class="skill-card-title">Cybersecurity</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Threat analysis, network security fundamentals, and security-first software design.</p>
+        <p class="skill-card-desc">Threat analysis, network security fundamentals, and security-first software design.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="skill-pill-dot"></span>Threat Analysis</span>
           <span class="tag"><span class="skill-pill-dot"></span>Network Security</span>
-          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent">🎖️</span>Certiport Certified</span>
+          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent"><i data-lucide="award"></i></span>Certiport Certified</span>
         </div>
       </div>
       <div class="skill-card" style="border-top-color:var(--teal)">
-        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🤖</div>
+        <div class="skill-card-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)"><i data-lucide="bot"></i></div>
         <div class="skill-card-title">AI &amp; Machine Learning</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Building NLP pipelines, transformer models, and multimodal fake news detection systems.</p>
+        <p class="skill-card-desc">Building NLP pipelines, transformer models, and multimodal fake news detection systems.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="skill-pill-dot" style="background:var(--teal)"></span>DistilBERT</span>
           <span class="tag"><span class="skill-pill-dot" style="background:var(--teal)"></span>BERTweet</span>
@@ -1935,9 +2175,9 @@
         </div>
       </div>
       <div class="skill-card">
-        <div class="skill-card-icon">🌐</div>
+        <div class="skill-card-icon"><i data-lucide="globe"></i></div>
         <div class="skill-card-title">Web Development</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Full-stack development with Laravel, Django, and modern front-end technologies.</p>
+        <p class="skill-card-desc">Full-stack development with Laravel, Django, and modern front-end technologies.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/laravel" alt="" loading="lazy" onerror="iconFallback(this)"></span>Laravel</span>
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/django" alt="" loading="lazy" onerror="iconFallback(this)"></span>Django</span>
@@ -1946,9 +2186,9 @@
         </div>
       </div>
       <div class="skill-card" style="border-top-color:var(--teal)">
-        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">💻</div>
+        <div class="skill-card-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)"><i data-lucide="code"></i></div>
         <div class="skill-card-title">Languages</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Comfortable across multiple languages for backend, scripting, and data work.</p>
+        <p class="skill-card-desc">Comfortable across multiple languages for backend, scripting, and data work.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/python" alt="" loading="lazy" onerror="iconFallback(this)"></span>Python</span>
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/openjdk" alt="" loading="lazy" onerror="iconFallback(this)"></span>Java</span>
@@ -1958,9 +2198,9 @@
         </div>
       </div>
       <div class="skill-card">
-        <div class="skill-card-icon">🛠️</div>
+        <div class="skill-card-icon"><i data-lucide="wrench"></i></div>
         <div class="skill-card-title">Tools &amp; DevOps</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Version control, AI-assisted development, and prompt engineering workflows.</p>
+        <p class="skill-card-desc">Version control, AI-assisted development, and prompt engineering workflows.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/git" alt="" loading="lazy" onerror="iconFallback(this)"></span>Git</span>
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/github" alt="" loading="lazy" onerror="iconFallback(this)"></span>GitHub</span>
@@ -1970,13 +2210,13 @@
         </div>
       </div>
       <div class="skill-card" style="border-top-color:var(--teal)">
-        <div class="skill-card-icon" style="background:var(--teal-dim);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🗄️</div>
+        <div class="skill-card-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)"><i data-lucide="database"></i></div>
         <div class="skill-card-title">Databases</div>
-        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6">Relational database design, ERD modeling, and SQL query optimization.</p>
+        <p class="skill-card-desc">Relational database design, ERD modeling, and SQL query optimization.</p>
         <div class="skill-card-tags">
           <span class="tag"><span class="tag-icon"><img src="https://cdn.simpleicons.org/mysql" alt="" loading="lazy" onerror="iconFallback(this)"></span>MySQL</span>
           <span class="tag"><span class="skill-pill-dot"></span>SQL</span>
-          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent">🎖️</span>Certiport Certified</span>
+          <span class="tag tag-teal"><span class="tag-icon" style="background:transparent"><i data-lucide="award"></i></span>Certiport Certified</span>
         </div>
       </div>
     </div>
@@ -1993,11 +2233,11 @@
 
       <a class="cert-card" href="Cybersecurity_Certificate.pdf" target="_blank" rel="noopener">
         <div class="cert-thumb">
-          <img src="Cybersecurity_Certificate.jpg" alt="Cybersecurity certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Cybersecurity_Certificate.png" alt="Cybersecurity certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
-          <div class="cert-thumb-badge">🛡️</div>
+          <div class="cert-thumb-badge"><i data-lucide="shield-check"></i></div>
         </div>
         <div class="cert-info">
           <h4>Cybersecurity</h4>
@@ -2009,11 +2249,11 @@
 
       <a class="cert-card" href="Network_Security_Certificate.pdf" target="_blank" rel="noopener" style="border-top-color:var(--teal)">
         <div class="cert-thumb">
-          <img src="Network_Security_Certificate.jpg" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Network_Security_Certificate.png" alt="Network Security certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
-          <div class="cert-thumb-badge">🌐</div>
+          <div class="cert-thumb-badge" style="color:var(--teal)"><i data-lucide="network"></i></div>
         </div>
         <div class="cert-info">
           <h4>Network Security</h4>
@@ -2025,11 +2265,11 @@
 
       <a class="cert-card" href="Database_Certificate.pdf" target="_blank" rel="noopener">
         <div class="cert-thumb">
-          <img src="Database_Certificate.jpg" alt="Database Fundamentals certificate" loading="lazy" onerror="imgFallback(this)">
+          <img src="Database_Certificate.png" alt="Database Fundamentals certificate" loading="lazy" onerror="imgFallback(this)">
           <div class="cert-thumb-fallback">
             <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
           </div>
-          <div class="cert-thumb-badge">🗄️</div>
+          <div class="cert-thumb-badge"><i data-lucide="database"></i></div>
         </div>
         <div class="cert-info">
           <h4>Database Fundamentals</h4>
@@ -2049,7 +2289,7 @@
     <p class="section-sub">Tech communities I've been part of and contributed to.</p>
     <div class="orgs-grid">
       <div class="org-card">
-        <div class="org-icon">💻</div>
+        <div class="org-icon"><i data-lucide="code"></i></div>
         <div class="org-info">
           <h4>UM Student Developer Community</h4>
           <p>Member — software development, tech projects, and developer community building.</p>
@@ -2057,7 +2297,7 @@
         </div>
       </div>
       <div class="org-card" style="border-top-color:var(--teal)">
-        <div class="org-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">⛓️</div>
+        <div class="org-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)"><i data-lucide="link-2"></i></div>
         <div class="org-info">
           <h4>Junior Blockchain Education Consortium – UM Davao</h4>
           <p>Member — promoting blockchain education and Web3 awareness among Filipino students.</p>
@@ -2065,7 +2305,7 @@
         </div>
       </div>
       <div class="org-card">
-        <div class="org-icon">🐍</div>
+        <div class="org-icon"><i data-lucide="users"></i></div>
         <div class="org-info">
           <h4>DurianPy – Davao Python User Group</h4>
           <p>Volunteer — growing the Python community in Davao through meetups and workshops.</p>
@@ -2082,7 +2322,7 @@
     <p class="section-sub">Conferences and workshops I've attended and contributed to.</p>
     <div class="seminars-list">
       <div class="seminar-item">
-        <div class="seminar-icon">🎤</div>
+        <div class="seminar-icon"><i data-lucide="mic"></i></div>
         <span class="seminar-year">2025</span>
         <div class="seminar-text">
           <h4>DevFest Davao 2025 – GDG Davao</h4>
@@ -2090,7 +2330,7 @@
         </div>
       </div>
       <div class="seminar-item" style="border-left-color:var(--teal)">
-        <div class="seminar-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)">🤖</div>
+        <div class="seminar-icon" style="background:var(--teal-dim);color:var(--teal);box-shadow:0 6px 16px -4px rgba(34,211,238,0.4)"><i data-lucide="bot"></i></div>
         <span class="seminar-year">2025</span>
         <div class="seminar-text">
           <h4>Build with AI Davao 2025 – GDG Davao</h4>
@@ -2098,7 +2338,7 @@
         </div>
       </div>
       <div class="seminar-item">
-        <div class="seminar-icon">⛓️</div>
+        <div class="seminar-icon"><i data-lucide="link-2"></i></div>
         <span class="seminar-year">2024</span>
         <div class="seminar-text">
           <h4>Blockchain Campus Conference 2024 – Logistics Volunteer</h4>
@@ -2109,7 +2349,27 @@
   </section>
 
   <footer>
-    Built with ♥ by <span>Justin Troy Rosalada</span> · Davao City, Philippines
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Justin Troy Rosalada</p>
+        <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a onclick="showPage('about')">About</a></li>
+        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="footer-socials">
+        <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with <i data-lucide="heart" class="footer-heart"></i> by <span class="accent">Justin Troy Rosalada</span> &middot; Davao City, Philippines</span>
+      <span>&copy; <span class="footer-year-num"></span> All rights reserved.</span>
+    </div>
   </footer>
 </div>
 
@@ -2190,7 +2450,7 @@
 
         <div class="focus-card">
           <p style="font-size:0.78rem;color:var(--text3);margin-bottom:0.75rem;font-family:'Space Mono',monospace;letter-spacing:0.08em">CURRENT FOCUS</p>
-          <p style="font-size:0.88rem;color:var(--text2);line-height:1.7">Actively seeking an OJT/internship position. Working on AI-driven misinformation detection thesis, exploring BERTweet as base model for improved emotional manipulation detection in disaster-related social media posts.</p>
+          <p style="font-size:0.88rem;color:var(--text2);line-height:1.7;text-align:justify">Actively seeking an OJT/internship position. Working on AI-driven misinformation detection thesis, exploring BERTweet as base model for improved emotional manipulation detection in disaster-related social media posts.</p>
           <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem">
             <span class="tag tag-teal">Open to OJT</span>
             <span class="tag">Davao City</span>
@@ -2211,7 +2471,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="AbsTrack_Logo.png" alt="AbsTrack Fitness Gym Management System logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">🏋️</div>
+            <div class="project-image-fallback"><i data-lucide="dumbbell"></i></div>
             <span class="project-featured-badge">Featured</span>
             <div class="project-links">
               <a class="project-link" href="https://github.com/Siege365/AbsTrackFitnessGymManagementSystem" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
@@ -2222,7 +2482,7 @@
             <h3 class="project-title">AbsTrack Fitness Gym Management System</h3>
             <p class="project-desc">A full-featured gym management system with five integrated subsystems handling member registration, attendance tracking, billing, scheduling, and data-driven gym operations.</p>
             <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
-            <div class="project-demo-creds">📧 admin@abstrack.com &nbsp;·&nbsp; 🔑 password</div>
+            <div class="project-demo-creds"><i data-lucide="mail"></i> admin@abstrack.com &nbsp;&middot;&nbsp; <i data-lucide="key"></i> password</div>
             <div class="project-tags">
               <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/laravel" alt="" loading="lazy" onerror="iconFallback(this)"></div>Laravel</div>
               <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/php" alt="" loading="lazy" onerror="iconFallback(this)"></div>PHP</div>
@@ -2235,7 +2495,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="FakeNewsDetector_Logo.png" alt="Fake News Detector logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">📰</div>
+            <div class="project-image-fallback"><i data-lucide="newspaper"></i></div>
             <span class="project-featured-badge">Featured</span>
             <div class="project-links">
               <a class="project-link" href="https://github.com/Shang-QT/Fake-News-DistilBERT" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
@@ -2258,7 +2518,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="Vitapets_Logo.png" alt="Vitapets Animal Clinic logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">🐾</div>
+            <div class="project-image-fallback"><i data-lucide="paw-print"></i></div>
             <span class="project-featured-badge">Featured</span>
             <div class="project-links">
               <a class="project-link" href="https://github.com/Shang-QT/Vitapets" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
@@ -2282,7 +2542,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="Foodtruck_Logo.png" alt="Foodtruck Ordering System logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">🚚</div>
+            <div class="project-image-fallback"><i data-lucide="truck"></i></div>
             <div class="project-links">
               <a class="project-link" href="https://github.com/Siege365/FoodTruckCompile" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
@@ -2302,7 +2562,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="ANGA_Logo.png" alt="ANGA University Portal logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">🎓</div>
+            <div class="project-image-fallback"><i data-lucide="graduation-cap"></i></div>
             <div class="project-links">
               <a class="project-link" href="https://github.com/elbse/DSAFinalProject" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
@@ -2323,7 +2583,7 @@
         <div class="project-card">
           <div class="project-image">
             <img src="ModengZoo_Logo.png" alt="Modeng Zoo Management System logo" loading="lazy" onerror="imgFallback(this)">
-            <div class="project-image-fallback">🦁</div>
+            <div class="project-image-fallback"><i data-lucide="trees"></i></div>
             <div class="project-links">
               <a class="project-link" href="https://github.com/Juthut2/ZooMS" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
             </div>
@@ -2344,7 +2604,27 @@
     </div>
   </section>
   <footer>
-    Built with ♥ by <span>Justin Troy Rosalada</span> · Davao City, Philippines
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Justin Troy Rosalada</p>
+        <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a onclick="showPage('about')">About</a></li>
+        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="footer-socials">
+        <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with <i data-lucide="heart" class="footer-heart"></i> by <span class="accent">Justin Troy Rosalada</span> &middot; Davao City, Philippines</span>
+      <span>&copy; <span class="footer-year-num"></span> All rights reserved.</span>
+    </div>
   </footer>
 </div>
 
@@ -2358,7 +2638,7 @@
       <h1 class="resume-name">Justin Troy L. Rosalada</h1>
       <p style="font-size:0.88rem;color:var(--text2);margin-top:0.35rem">BS Computer Science · 3rd Year · University of Mindanao</p>
       <div class="resume-contact">
-        <span>📍 Davao City, Philippines</span>
+        <span><i data-lucide="map-pin"></i> Davao City, Philippines</span>
         <a href="mailto:jtrosalada@gmail.com">jtrosalada@gmail.com</a>
         <span>+63 9953697075</span>
         <a href="https://github.com/Juthut2" target="_blank">github.com/Juthut2 (School)</a>
@@ -2546,7 +2826,27 @@
     </div>
   </div>
   <footer>
-    Built with ♥ by <span>Justin Troy Rosalada</span> · Davao City, Philippines
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Justin Troy Rosalada</p>
+        <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a onclick="showPage('about')">About</a></li>
+        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="footer-socials">
+        <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with <i data-lucide="heart" class="footer-heart"></i> by <span class="accent">Justin Troy Rosalada</span> &middot; Davao City, Philippines</span>
+      <span>&copy; <span class="footer-year-num"></span> All rights reserved.</span>
+    </div>
   </footer>
 </div>
 
@@ -2561,46 +2861,46 @@
 
     <div class="contact-layout">
       <div>
-        <p style="font-size:0.95rem;color:var(--text2);line-height:1.75;margin-bottom:1rem">I'm currently looking for an OJT/internship where I can apply my skills in cybersecurity, AI/ML, and full-stack development. If you think we'd be a good fit, let's talk.</p>
+        <p style="font-size:0.95rem;color:var(--text2);line-height:1.75;margin-bottom:1rem;text-align:justify">I'm currently looking for an OJT/internship where I can apply my skills in cybersecurity, AI/ML, and full-stack development. If you think we'd be a good fit, let's talk.</p>
 
         <div class="local-time-badge">
-          <span id="localTimeEmoji">🌙</span>
+          <span id="localTimeEmoji"><i data-lucide="sunrise" class="clock-icon ci-dawn"></i><i data-lucide="sun" class="clock-icon ci-day" style="display:none"></i><i data-lucide="sunset" class="clock-icon ci-dusk" style="display:none"></i><i data-lucide="moon" class="clock-icon ci-night" style="display:none"></i></span>
           <span>It's currently <strong id="localTimeText">--:--</strong> in Davao City</span>
         </div>
 
         <div class="contact-info-list">
           <a class="contact-item" href="mailto:jtrosalada@gmail.com">
-            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-icon"><i data-lucide="mail"></i></div>
             <div class="contact-item-text">
               <p>Email</p>
               <p>jtrosalada@gmail.com</p>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard(event, 'jtrosalada@gmail.com', this)" title="Copy email" aria-label="Copy email">📋</button>
+            <button class="copy-btn" onclick="copyToClipboard(event, 'jtrosalada@gmail.com', this)" title="Copy email" aria-label="Copy email"><i data-lucide="clipboard" class="icon-clipboard"></i><i data-lucide="check" class="icon-check" style="display:none"></i></button>
           </a>
           <a class="contact-item" href="tel:+639953697075">
-            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-icon"><i data-lucide="phone"></i></div>
             <div class="contact-item-text">
               <p>Phone</p>
               <p>+63 9953697075</p>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard(event, '+639953697075', this)" title="Copy phone number" aria-label="Copy phone number">📋</button>
+            <button class="copy-btn" onclick="copyToClipboard(event, '+639953697075', this)" title="Copy phone number" aria-label="Copy phone number"><i data-lucide="clipboard" class="icon-clipboard"></i><i data-lucide="check" class="icon-check" style="display:none"></i></button>
           </a>
           <a class="contact-item" href="https://github.com/Juthut2" target="_blank">
-            <div class="contact-item-icon">🎓</div>
+            <div class="contact-item-icon"><i data-lucide="graduation-cap"></i></div>
             <div class="contact-item-text">
               <p>GitHub (School)</p>
               <p>github.com/Juthut2</p>
             </div>
           </a>
           <a class="contact-item" href="https://github.com/Juthut213" target="_blank">
-            <div class="contact-item-icon">💻</div>
+            <div class="contact-item-icon"><i data-lucide="laptop"></i></div>
             <div class="contact-item-text">
               <p>GitHub (Personal)</p>
               <p>github.com/Juthut213</p>
             </div>
           </a>
           <div class="contact-item" style="cursor:default">
-            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-icon"><i data-lucide="map-pin"></i></div>
             <div class="contact-item-text">
               <p>Location</p>
               <p>Davao City, Philippines</p>
@@ -2611,7 +2911,7 @@
         <div class="qr-card">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=mailto%3Ajtrosalada%40gmail.com" alt="QR code that opens an email to Justin" loading="lazy" onerror="this.parentElement.style.display='none'">
           <div>
-            <p class="qr-title">📱 Scan to email me</p>
+            <p class="qr-title"><i data-lucide="qr-code"></i> Scan to email me</p>
             <p class="qr-sub">Meeting in person? Point your camera here to fire off an email straight to my inbox.</p>
           </div>
         </div>
@@ -2633,13 +2933,33 @@
         </div>
         <button class="form-submit" onclick="handleFormSubmit()">Send Message</button>
         <div class="form-success" id="form-success">
-          ✅ Message sent! I'll get back to you soon.
+          <i data-lucide="check-circle-2" style="color:#22C55E"></i> Message sent! I'll get back to you soon.
         </div>
       </div>
     </div>
   </section>
   <footer>
-    Built with ♥ by <span>Justin Troy Rosalada</span> · Davao City, Philippines
+    <div class="footer-inner">
+      <div>
+        <p class="footer-name">Justin Troy Rosalada</p>
+        <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a onclick="showPage('about')">About</a></li>
+        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="footer-socials">
+        <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with <i data-lucide="heart" class="footer-heart"></i> by <span class="accent">Justin Troy Rosalada</span> &middot; Davao City, Philippines</span>
+      <span>&copy; <span class="footer-year-num"></span> All rights reserved.</span>
+    </div>
   </footer>
 </div>
 
@@ -2794,9 +3114,11 @@
   function toggleTheme() {
     const html = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    const newTheme = isDark ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
     const btn = document.querySelector('.theme-toggle');
-    btn.textContent = isDark ? '🌙' : '☀️';
+    btn.querySelector('.icon-sun').style.display = newTheme === 'dark' ? '' : 'none';
+    btn.querySelector('.icon-moon').style.display = newTheme === 'light' ? '' : 'none';
     const rect = btn.getBoundingClientRect();
     sparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
   }
@@ -2884,16 +3206,25 @@
     }, 1000);
   }
 
+  // ── FOOTER YEAR ──
+  function initFooterYear() {
+    const year = new Date().getFullYear();
+    document.querySelectorAll('.footer-year-num').forEach(el => el.textContent = year);
+  }
+
   // ── COPY TO CLIPBOARD ──
   function copyToClipboard(event, text, btn) {
     event.preventDefault();
     event.stopPropagation();
-    const original = btn.textContent;
     function showCopied() {
-      btn.textContent = '✓';
+      const clip = btn.querySelector('.icon-clipboard');
+      const check = btn.querySelector('.icon-check');
+      if (clip) clip.style.display = 'none';
+      if (check) check.style.display = '';
       btn.classList.add('copied');
       setTimeout(() => {
-        btn.textContent = original;
+        if (clip) clip.style.display = '';
+        if (check) check.style.display = 'none';
         btn.classList.remove('copied');
       }, 1500);
     }
@@ -2907,16 +3238,17 @@
   // ── LIVE DAVAO CLOCK ──
   function updateLocalClock() {
     const elText = document.getElementById('localTimeText');
-    const elEmoji = document.getElementById('localTimeEmoji');
     if (!elText) return;
     const now = new Date();
     elText.textContent = now.toLocaleTimeString('en-PH', { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
     const hour = parseInt(now.toLocaleTimeString('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', hour12: false }), 10);
-    let emoji = '🌙';
-    if (hour >= 5 && hour < 12) emoji = '🌅';
-    else if (hour >= 12 && hour < 18) emoji = '☀️';
-    else if (hour >= 18 && hour < 21) emoji = '🌇';
-    if (elEmoji) elEmoji.textContent = emoji;
+    let active = 'ci-night';
+    if (hour >= 5 && hour < 12) active = 'ci-dawn';
+    else if (hour >= 12 && hour < 18) active = 'ci-day';
+    else if (hour >= 18 && hour < 21) active = 'ci-dusk';
+    document.querySelectorAll('.clock-icon').forEach((el) => {
+      el.style.display = el.classList.contains(active) ? '' : 'none';
+    });
   }
 
   function initLocalClock() {
@@ -2927,6 +3259,8 @@
 
   // ── INIT ──
   window.addEventListener('DOMContentLoaded', () => {
+    if (window.lucide) lucide.createIcons();
+    initFooterYear();
     initObserver();
     initHeroParallax();
     initBackToTop();
