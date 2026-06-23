@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Justin Troy Rosalada – Portfolio</title>
+<meta name="description" content="Justin Troy Rosalada — Computer Science student at the University of Mindanao specializing in cybersecurity, AI/ML, and full-stack development. View projects, certifications, and research.">
+<meta name="author" content="Justin Troy Rosalada">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Justin Troy Rosalada – Portfolio">
+<meta property="og:description" content="CS student specializing in cybersecurity, AI/ML, and full-stack development. Open to OJT opportunities.">
+<meta property="og:image" content="Profile.jpg">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Justin Troy Rosalada – Portfolio">
+<meta name="twitter:description" content="CS student specializing in cybersecurity, AI/ML, and full-stack development. Open to OJT opportunities.">
+<meta name="twitter:image" content="Profile.jpg">
+
 <link rel="icon" type="image/jpeg" href="Profile.jpg">
 <link rel="apple-touch-icon" href="Profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,6 +81,59 @@
     overflow-x: hidden;
   }
 
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 12% 15%, rgba(99,102,241,0.12), transparent 42%),
+      radial-gradient(circle at 88% 30%, rgba(34,211,238,0.09), transparent 42%),
+      radial-gradient(circle at 25% 85%, rgba(34,211,238,0.08), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(99,102,241,0.10), transparent 42%);
+    pointer-events: none;
+  }
+
+  /* ── AMBIENT ORB FIELD (fixed, fills whole viewport at all scroll positions) ── */
+  .ambient-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ambient-orbs .a-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.16;
+    animation: ambientDrift ease-in-out infinite alternate;
+  }
+
+  .ambient-orbs .a-orb:nth-child(1) { width: 460px; height: 460px; background: var(--accent); top: -8%;  left: -8%;  animation-duration: 16s; animation-delay: 0s; }
+  .ambient-orbs .a-orb:nth-child(2) { width: 380px; height: 380px; background: var(--teal);   top: 4%;   right: -6%; animation-duration: 19s; animation-delay: -3s; }
+  .ambient-orbs .a-orb:nth-child(3) { width: 340px; height: 340px; background: var(--accent); top: 22%;  left: 40%;  animation-duration: 14s; animation-delay: -6s; }
+  .ambient-orbs .a-orb:nth-child(4) { width: 400px; height: 400px; background: var(--teal);   top: 38%;  left: -10%; animation-duration: 21s; animation-delay: -2s; }
+  .ambient-orbs .a-orb:nth-child(5) { width: 340px; height: 340px; background: var(--accent); top: 48%;  right: 2%;  animation-duration: 17s; animation-delay: -9s; }
+  .ambient-orbs .a-orb:nth-child(6) { width: 380px; height: 380px; background: var(--teal);   top: 64%;  left: 18%;  animation-duration: 20s; animation-delay: -5s; }
+  .ambient-orbs .a-orb:nth-child(7) { width: 300px; height: 300px; background: var(--accent); top: 72%;  right: 22%; animation-duration: 15s; animation-delay: -11s; }
+  .ambient-orbs .a-orb:nth-child(8) { width: 340px; height: 340px; background: var(--teal);   top: 84%;  left: -6%;  animation-duration: 18s; animation-delay: -7s; }
+  .ambient-orbs .a-orb:nth-child(9) { width: 280px; height: 280px; background: var(--accent); top: 86%;  left: 45%;  animation-duration: 16s; animation-delay: -4s; }
+
+  @keyframes ambientDrift {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 30px) scale(1.12); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-orbs .a-orb,
+    .section-orb,
+    .orb {
+      animation: none !important;
+    }
+  }
+
   @keyframes gradientBG {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -87,6 +153,16 @@
   ::-webkit-scrollbar-track { background: var(--bg2); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 8px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  .section-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.14;
+    z-index: -1;
+    animation: drift 10s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
 
   /* ── NAV ── */
   nav {
@@ -773,6 +849,41 @@
   .about-photo-caption { font-weight: 600; font-size: 0.92rem; color: var(--text); }
   .about-photo-role { font-size: 0.74rem; color: var(--text3); font-family: 'Space Mono', monospace; margin-top: 0.25rem; }
 
+  .cert-preview {
+    position: fixed;
+    z-index: 300;
+    width: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    border: 1px solid var(--border2);
+    background: #fff;
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+  }
+
+  .cert-preview.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .cert-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .cert-preview-caption {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text3);
+    background: var(--surface);
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
   /* Certs */
   .certs-grid {
     display: grid;
@@ -931,6 +1042,11 @@
     .contact-form { padding: 1.5rem; }
     .project-body { padding: 1.1rem 1.25rem 1.25rem; }
     .cert-card, .org-card { padding: 1.1rem 1.25rem; }
+    .section-orb { transform: scale(0.6); }
+    .ambient-orbs .a-orb { filter: blur(60px); opacity: 0.13; }
+    .about-watermark { font-size: 6rem; top: -1.5rem; }
+    .footer-inner, .footer-bottom { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+    .footer-nav { flex-wrap: wrap; gap: 1rem; }
   }
 
   .timeline {
@@ -1964,7 +2080,7 @@
       min-height: auto !important;
       height: auto !important;
     }
-    nav, .theme-toggle {
+    nav, .theme-toggle, body::before {
       display: none !important;
     }
     .page {
@@ -2061,14 +2177,28 @@
 </head>
 <body>
 
+<!-- Fixed ambient glow field: fills the whole viewport at every scroll position,
+     so colorful orbs aren't confined to section edges -->
+<div class="ambient-orbs" id="ambientOrbs" aria-hidden="true">
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+  <span class="a-orb"></span>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showPage('about')">JT<span>.</span>dev</div>
   <ul class="nav-links">
-    <li><a onclick="showPage('about')" class="active" id="nav-about">About</a></li>
-    <li><a onclick="showPage('experience')" id="nav-experience">Experience</a></li>
+    <li><a href="#" onclick="showPage('about');return false;" class="active" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('experience');return false;" id="nav-experience">Experience</a></li>
     <li><a href="Rosalada_Resume.pdf" target="_blank" id="nav-resume">Resume</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a href="#" onclick="showPage('contact');return false;" id="nav-contact">Contact</a></li>
   </ul>
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme"><i data-lucide="sun" class="icon-sun"></i><i data-lucide="moon" class="icon-moon" style="display:none"></i></button>
 </nav>
@@ -2148,7 +2278,9 @@
   <div class="divider"></div>
 
   <!-- SKILLS -->
-  <section class="section">
+  <section class="section" style="position:relative;overflow:hidden">
+    <span class="section-orb" style="width:340px;height:340px;background:var(--accent);top:-120px;right:-100px;animation-delay:0s"></span>
+    <span class="section-orb" style="width:260px;height:260px;background:var(--teal);bottom:-80px;left:-80px;animation-delay:-3s"></span>
     <p class="section-label">// what I work with</p>
     <h2 class="section-title">Skills &amp; <span class="accent">Toolbox</span></h2>
     <p class="section-sub">From cybersecurity to AI systems, here's what I bring to the table.</p>
@@ -2225,10 +2357,12 @@
   <div class="divider"></div>
 
   <!-- CERTIFICATIONS -->
-  <section class="section">
+  <section class="section" style="position:relative;overflow:hidden">
+    <span class="section-orb" style="width:280px;height:280px;background:var(--teal);top:-100px;left:-90px;animation-delay:-1.5s"></span>
+    <span class="section-orb" style="width:220px;height:220px;background:var(--accent);bottom:-60px;right:-60px;animation-delay:-4s"></span>
     <p class="section-label">// credentials</p>
     <h2 class="section-title">Certifi<span class="accent">cations</span></h2>
-    <p class="section-sub">Industry-recognized credentials from Certiport.</p>
+    <p class="section-sub">Industry-recognized credentials from Certiport and university-led workshops.</p>
     <div class="certs-grid">
 
       <a class="cert-card" href="Cybersecurity_Certificate.pdf" target="_blank" rel="noopener">
@@ -2279,11 +2413,28 @@
         <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
       </a>
 
+      <a class="cert-card" href="Git_GitHub_JavaScript_Certificate.pdf" target="_blank" rel="noopener" style="border-top-color:var(--teal)">
+        <div class="cert-thumb">
+          <img src="Git_GitHub_JavaScript_Certificate.png" alt="Git, GitHub & JavaScript Workshop certificate" loading="lazy" onerror="imgFallback(this)">
+          <div class="cert-thumb-fallback">
+            <span class="ln"></span><span class="ln"></span><span class="ln"></span><span class="ln"></span>
+          </div>
+          <div class="cert-thumb-badge" style="color:var(--teal)"><i data-lucide="git-branch"></i></div>
+        </div>
+        <div class="cert-info">
+          <h4>Git, GitHub &amp; JavaScript Workshop</h4>
+          <p>CCE Skills Clinic — University of Mindanao</p>
+          <span class="cert-date">June 2026</span>
+        </div>
+        <span class="cert-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+      </a>
+
     </div>
   </section>
 
   <!-- ORGANIZATIONS -->
-  <section class="section" style="padding-top:0">
+  <section class="section" style="padding-top:0;position:relative;overflow:hidden">
+    <span class="section-orb" style="width:300px;height:300px;background:var(--accent);top:-90px;right:-100px;animation-delay:-2s"></span>
     <p class="section-label">// community</p>
     <h2 class="section-title">Orgs &amp; <span class="accent">Affiliations</span></h2>
     <p class="section-sub">Tech communities I've been part of and contributed to.</p>
@@ -2316,7 +2467,8 @@
   </section>
 
   <!-- SEMINARS -->
-  <section class="section" style="padding-top:0">
+  <section class="section" style="padding-top:0;position:relative;overflow:hidden">
+    <span class="section-orb" style="width:260px;height:260px;background:var(--teal);bottom:-90px;left:-70px;animation-delay:-3.5s"></span>
     <p class="section-label">// events</p>
     <h2 class="section-title">Seminars &amp; <span class="accent">Events</span></h2>
     <p class="section-sub">Conferences and workshops I've attended and contributed to.</p>
@@ -2355,14 +2507,14 @@
         <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
       </div>
       <ul class="footer-nav">
-        <li><a onclick="showPage('about')">About</a></li>
-        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="#" onclick="showPage('about');return false;">About</a></li>
+        <li><a href="#" onclick="showPage('experience');return false;">Experience</a></li>
         <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
-        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
       </ul>
       <div class="footer-socials">
         <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
-        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
         <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
       </div>
     </div>
@@ -2377,7 +2529,9 @@
      PAGE: EXPERIENCE
 ════════════════════════════════════════ -->
 <div class="page" id="page-experience">
-  <section class="section" style="padding-top:5rem;max-width:1100px">
+  <section class="section" style="padding-top:5rem;max-width:1100px;position:relative;overflow:hidden">
+    <span class="section-orb" style="width:360px;height:360px;background:var(--accent);top:-110px;right:-80px;animation-delay:-1s"></span>
+    <span class="section-orb" style="width:240px;height:240px;background:var(--teal);bottom:10%;left:-100px;animation-delay:-4.5s"></span>
     <p class="section-label">// work &amp; research</p>
     <h2 class="section-title">Experience &amp; <span class="accent">Projects</span></h2>
     <p class="section-sub">Real work, academic research, and the projects I've shipped.</p>
@@ -2431,11 +2585,11 @@
         <h3 style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1.5rem;font-family:'Space Mono',monospace">Quick Stats</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem">
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--accent)" data-count="3" data-suffix="+">0</p>
-            <p class="stat-label">Certiport Certs</p>
+            <p class="stat-num" style="color:var(--accent)" data-count="4" data-suffix="">0</p>
+            <p class="stat-label">Certifications</p>
           </div>
           <div class="stat-card">
-            <p class="stat-num" style="color:var(--teal)" data-count="6" data-suffix="+">0</p>
+            <p class="stat-num" style="color:var(--teal)" data-count="7" data-suffix="+">0</p>
             <p class="stat-label">Projects Built</p>
           </div>
           <div class="stat-card">
@@ -2600,6 +2754,28 @@
           </div>
         </div>
 
+        <!-- Pokedex -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="Pokedex_Logo.png" alt="Pokédex web app logo" loading="lazy" onerror="imgFallback(this)">
+            <div class="project-image-fallback"><i data-lucide="zap"></i></div>
+            <div class="project-links">
+              <a class="project-link" href="https://github.com/Juthut213/june-interns-pokedex" target="_blank" title="Source Code"><img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy"></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Pokédex Web App</h3>
+            <p class="project-desc">A collaborative Pokédex built with a cohort of fellow interns, practicing Git branching and pull request workflows. Pulls live data from the PokéAPI with search and type-based filtering across the National Pokédex.</p>
+            <button class="project-see-more" onclick="toggleProjectDesc(this)">See More →</button>
+            <div class="project-tags">
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/javascript" alt="" loading="lazy" onerror="iconFallback(this)"></div>JavaScript</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/html5" alt="" loading="lazy" onerror="iconFallback(this)"></div>HTML5</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/css3" alt="" loading="lazy" onerror="iconFallback(this)"></div>CSS3</div>
+              <div class="proj-tag"><div class="proj-tag-icon"><img src="https://cdn.simpleicons.org/git" alt="" loading="lazy" onerror="iconFallback(this)"></div>Git</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -2610,14 +2786,14 @@
         <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
       </div>
       <ul class="footer-nav">
-        <li><a onclick="showPage('about')">About</a></li>
-        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="#" onclick="showPage('about');return false;">About</a></li>
+        <li><a href="#" onclick="showPage('experience');return false;">Experience</a></li>
         <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
-        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
       </ul>
       <div class="footer-socials">
         <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
-        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
         <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
       </div>
     </div>
@@ -2715,6 +2891,13 @@
         <span class="resume-entry-date">May 2025</span>
       </div>
       <p class="resume-entry-sub">Certiport</p>
+    </div>
+    <div class="resume-entry">
+      <div class="resume-entry-header">
+        <p class="resume-entry-title">Git, GitHub &amp; JavaScript Workshop</p>
+        <span class="resume-entry-date">June 2026</span>
+      </div>
+      <p class="resume-entry-sub">CCE Skills Clinic — University of Mindanao</p>
     </div>
 
     <!-- Technical Skills -->
@@ -2832,14 +3015,14 @@
         <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
       </div>
       <ul class="footer-nav">
-        <li><a onclick="showPage('about')">About</a></li>
-        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="#" onclick="showPage('about');return false;">About</a></li>
+        <li><a href="#" onclick="showPage('experience');return false;">Experience</a></li>
         <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
-        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
       </ul>
       <div class="footer-socials">
         <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
-        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
         <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
       </div>
     </div>
@@ -2854,7 +3037,9 @@
      PAGE: CONTACT
 ════════════════════════════════════════ -->
 <div class="page" id="page-contact">
-  <section class="section" style="padding-top:5rem">
+  <section class="section" style="padding-top:5rem;position:relative;overflow:hidden">
+    <span class="section-orb" style="width:320px;height:320px;background:var(--teal);top:-100px;left:-90px;animation-delay:-2.5s"></span>
+    <span class="section-orb" style="width:240px;height:240px;background:var(--accent);bottom:-70px;right:-70px;animation-delay:-5s"></span>
     <p class="section-label">// let's connect</p>
     <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
     <p class="section-sub">Open to OJT opportunities, collaborations, and interesting conversations.</p>
@@ -2945,14 +3130,14 @@
         <p class="footer-tagline">Cybersecurity &middot; AI/ML &middot; Full-Stack</p>
       </div>
       <ul class="footer-nav">
-        <li><a onclick="showPage('about')">About</a></li>
-        <li><a onclick="showPage('experience')">Experience</a></li>
+        <li><a href="#" onclick="showPage('about');return false;">About</a></li>
+        <li><a href="#" onclick="showPage('experience');return false;">Experience</a></li>
         <li><a href="Rosalada_Resume.pdf" target="_blank">Resume</a></li>
-        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
       </ul>
       <div class="footer-socials">
         <a href="mailto:jtrosalada@gmail.com" title="Email" aria-label="Email"><i data-lucide="mail"></i></a>
-        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="https://github.com/Juthut213" target="_blank" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
         <a href="tel:+639953697075" title="Phone" aria-label="Phone"><i data-lucide="phone"></i></a>
       </div>
     </div>
@@ -3081,6 +3266,51 @@
     const dot = document.createElement('div');
     dot.className = 'skill-pill-dot';
     wrap.replaceWith(dot);
+  }
+
+  // ── CERTIFICATE HOVER PREVIEW ──
+  function initCertPreview() {
+    if (!window.matchMedia('(pointer: fine)').matches) return; // skip on touch devices, click still opens the PDF
+    const cards = document.querySelectorAll('.cert-card');
+    if (!cards.length) return;
+
+    const preview = document.createElement('div');
+    preview.className = 'cert-preview';
+    const img = document.createElement('img');
+    const caption = document.createElement('div');
+    caption.className = 'cert-preview-caption';
+    preview.appendChild(img);
+    preview.appendChild(caption);
+    document.body.appendChild(preview);
+
+    function position(e) {
+      const margin = 18;
+      const w = 280, h = preview.offsetHeight || 200;
+      let x = e.clientX + margin;
+      let y = e.clientY - h / 2;
+      if (x + w + margin > window.innerWidth) x = e.clientX - w - margin;
+      if (y < margin) y = margin;
+      if (y + h + margin > window.innerHeight) y = window.innerHeight - h - margin;
+      preview.style.left = x + 'px';
+      preview.style.top = y + 'px';
+    }
+
+    cards.forEach((card) => {
+      const thumbImg = card.querySelector('.cert-thumb img');
+      if (!thumbImg) return;
+      card.addEventListener('mouseenter', (e) => {
+        // if the real cert image failed to load, the fallback is showing - nothing to preview
+        if (thumbImg.style.display === 'none') return;
+        img.src = thumbImg.getAttribute('src');
+        caption.textContent = card.querySelector('.cert-info h4')?.textContent || 'Certificate preview';
+        position(e);
+        preview.classList.add('visible');
+      });
+      card.addEventListener('mousemove', position);
+      card.addEventListener('mouseleave', () => {
+        preview.classList.remove('visible');
+      });
+    });
   }
 
   // ── SPARKLE BURST (small delight on theme toggle) ──
@@ -3260,12 +3490,19 @@
   // ── INIT ──
   window.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) lucide.createIcons();
+    // Safety net: if a data-lucide name doesn't exist in this Lucide build,
+    // the placeholder never gets converted to a real icon and is left empty.
+    // Hide those gracefully instead of showing a visible blank box.
+    document.querySelectorAll('i[data-lucide]').forEach((el) => {
+      el.style.display = 'none';
+    });
     initFooterYear();
     initObserver();
     initHeroParallax();
     initBackToTop();
     initTerminal();
     initLocalClock();
+    initCertPreview();
 
     // Typewriter Effect
     const twElement = document.getElementById('typewriter-text');
